@@ -3,7 +3,21 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebaseConfig: {
+    apiKey: "AIzaSyAfskEXSdkd-810uwC9Bd37FKQIGA8s9H0",
+    authDomain: "mezquitacofrade.firebaseapp.com",
+    databaseURL: "https://mezquitacofrade.firebaseio.com",
+    projectId: "mezquitacofrade",
+    storageBucket: "mezquitacofrade.appspot.com",
+    messagingSenderId: "1030917506986",
+    templosColeccion: "templos",
+    imagenesColeccion: "imagenes",
+    usuarios: "usuarios"
+  },
+
+  currentLanguages: ['es', 'en'], //idiomas disponibles de la aplicación
+  defaultLanguage: "es", //idioma por defecto
 };
 
 /*
