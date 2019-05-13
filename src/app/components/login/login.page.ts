@@ -11,27 +11,27 @@ import { Router } from '@angular/router';
 })
 export class LoginPage implements OnInit {
 
-  email:string;
-  password:string;
+  email: string;
+  password: string;
 
   constructor(
     private actionSheetController: ActionSheetController,
     private AuthService: AuthService,
     private router: Router
-    ) { }
+  ) { }
 
   ngOnInit() {
   }
 
-  login(){
+  login() {
     this.AuthService.login(this.email, this.password)
-    .then((answell) =>{
-      this.router.navigate(['/home']);
-    })
-    .catch((error) => {
-      alert('Los datos de inicio de sesión son incorrectos');
-      console.log(error);
-    });
+      .then((answell) => {
+        this.router.navigate(['/home']);
+      })
+      .catch((error) => {
+        alert('Los datos de inicio de sesión son incorrectos');
+        console.log(error);
+      });
   }
 
   async presentActionSheet() {
@@ -44,6 +44,21 @@ export class LoginPage implements OnInit {
         cssClass: 'creaUsuario',
         handler: () => {
           console.log('Crear usuario sin definir');
+
+          const myObj = {
+            name: 'Skip',
+            age: 2,
+            favoriteFood: 'Steak'
+          };
+
+          const myObjStr = JSON.stringify(myObj);
+
+          console.log(myObjStr);
+          // "{"name":"Skip","age":2,"favoriteFood":"Steak"}"
+
+          console.log(JSON.parse(myObjStr));
+          // Object {name:"Skip",age:2,favoriteFood:"Steak"}
+
         }
       }, {
         text: 'Recuperar contraseña',
