@@ -1,3 +1,24 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-split-pane>
+    <ion-menu side="end" menuId="custom" *ngIf="loginok()" >
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-title>Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-content>
+          <ion-list>
+            <ion-item>Añadir templo</ion-item>
+            <ion-item>Añadir imagen</ion-item>
+            <ion-item>Gestionar usuarios</ion-item>
+            <ion-item>Menu Item</ion-item>
+            <ion-item>Menu Item</ion-item>
+          </ion-list>
+          <ion-button expand="full" color="secondary" (click)="logOut()">Logout</ion-button>
+        </ion-content>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet main></ion-router-outlet>
+  </ion-split-pane>
 </ion-app>

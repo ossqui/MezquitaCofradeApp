@@ -4,18 +4,12 @@
     <ion-title color="light" text-center>Iniciar sesión</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content>
+<ion-content padding>
   <ion-img src="..\..\assets\icon\Logo.png" id="icon"></ion-img>
-  <ion-item lines="none">
-    <ion-label text-center position="stacked" color="dark">Correo</ion-label>
-    <ion-input text-center type="text" name="email" [(ngModel)]="email"></ion-input>
-  </ion-item>
-  <ion-item lines="none">
-    <ion-label text-center position="stacked" color="dark">Contraseña</ion-label>
-    <ion-input type="password" name="password" [(ngModel)]="password"></ion-input>
-  </ion-item>
-  <ion-button expand="full" color="secondary">Acceder</ion-button>
-  <ion-item button="true" lines="none">
+    <ion-label text-center  color="dark">Correo</ion-label>
+    <ion-input text-center type="email" name="email" [(ngModel)]="email"></ion-input>
+    <ion-label text-center color="dark">Contraseña</ion-label>
+    <ion-input text-center type="password" name="password" [(ngModel)]="password"></ion-input>
+  <ion-button expand="full" color="secondary" (click)="login()">Acceder</ion-button>
     <ion-label text-center (click)="presentActionSheet()">Opciones de usuario</ion-label>
-  </ion-item>
 </ion-content>

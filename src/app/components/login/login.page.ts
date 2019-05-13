@@ -1,6 +1,8 @@
+import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 import { ActionSheetController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,10 +11,27 @@ import { ActionSheetController } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
 
+  email:string;
+  password:string;
 
-  constructor(private actionSheetController: ActionSheetController) { }
+  constructor(
+    private actionSheetController: ActionSheetController,
+    private AuthService: AuthService,
+    private router: Router
+    ) { }
 
   ngOnInit() {
+  }
+
+  login(){
+    this.AuthService.login(this.email, this.password)
+    .then((answell) =>{
+      this.router.navigate(['/home']);
+    })
+    .catch((error) => {
+      alert('Los datos de inicio de sesión son incorrectos');
+      console.log(error);
+    });
   }
 
   async presentActionSheet() {
