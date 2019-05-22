@@ -10,9 +10,6 @@ const routes: Routes = [
   { path: 'login', loadChildren: './components/login/login.module#LoginPageModule', canActivate: [NoAuthGuard] },
   { path: 'add-temple1', loadChildren: './components/addTemple/add-temple1/add-temple1.module#AddTemple1PageModule' },
   { path: 'add-temple2', loadChildren: './components/addTemple/add-temple2/add-temple2.module#AddTemple2PageModule' },
-  { path: 'add-temple3', loadChildren: './components/addTemple/add-temple3/add-temple3.module#AddTemple3PageModule' },
-
-
 ];
 
 @NgModule({
