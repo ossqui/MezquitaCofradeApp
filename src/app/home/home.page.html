@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar color="primary">
+    <ion-toolbar color="primary" no-padding>
       <ion-buttons slot="start">
         <ion-menu-toggle>
           <ion-button>
@@ -14,9 +14,16 @@
   </ion-header>
 
 <ion-content>
-  <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be
-      your guide.</p>
-  </div>
+  <ion-list>
+    <ion-item *ngFor ="let temple of temples" (click)="openTemple(temple)" >
+      <ion-avatar slot="start">
+        <ion-img src="https://www.artencordoba.com/iglesias-fernandinas/FOTOS/SAN_LORENZO/IGLESIA_SAN_LORENZO_CORDOBA_51.jpg"></ion-img>
+      </ion-avatar>
+      <ion-label>
+        <h2> <b>{{temple.name}}</b> </h2>
+        <p>{{temple.type}}</p>
+      </ion-label>
+    </ion-item>
+  
+</ion-list>
 </ion-content>

@@ -8,8 +8,8 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', loadChildren: './home/home.module#HomePageModule', canActivate: [AuthGuard] },
   { path: 'login', loadChildren: './components/login/login.module#LoginPageModule', canActivate: [NoAuthGuard] },
-  { path: 'add-templo', loadChildren: './components/add-templo/add-templo.module#AddTemploPageModule', canActivate: [AuthGuard] },
-
+  { path: 'add-temple1', loadChildren: './components/addTemple/add-temple1/add-temple1.module#AddTemple1PageModule' },
+  { path: 'add-temple2', loadChildren: './components/addTemple/add-temple2/add-temple2.module#AddTemple2PageModule' },
 ];
 
 @NgModule({

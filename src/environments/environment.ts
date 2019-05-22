@@ -11,7 +11,7 @@ export const environment = {
     projectId: "mezquitacofrade",
     storageBucket: "mezquitacofrade.appspot.com",
     messagingSenderId: "1030917506986",
-    templosColeccion: "templos",
+    templeCollection: "temple",
     imagenesColeccion: "imagenes",
     usuarios: "usuarios"
   },

@@ -1,8 +1,10 @@
+import { Platform } from '@ionic/angular';
 import { AuthService } from './services/auth.service';
 import { Component } from '@angular/core';
 import { MenuController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
-import { Platform } from '@ionic/angular';
+
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -17,7 +19,8 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private menu: MenuController,
-    private AuthService: AuthService
+    private AuthService: AuthService,
+    private Router: Router,
   ) {
     this.initializeApp();
   }
@@ -25,10 +28,17 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
     });
   }
   loginok() {
     return this.AuthService.loginState();
+  }
+
+  goToAddTemplo() {
+    this.menu.close('custom').then(() => {
+      this.Router.navigate(['/add-temple1']);
+    })
   }
 
   logOut() {
@@ -36,4 +46,5 @@ export class AppComponent {
       this.AuthService.logOut();
     })
   }
+
 }

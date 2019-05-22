@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Añadir templo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="formTemple" (ngSubmit)="savePart2()">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title text-center>Apertura por la mañana</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-datetime formControlName="hourOpeningMorning" displayFormat="HH:mm" doneText="Aceptar" text-center
+          cancelText="Cancelar" hourValues="06, 07, 08, 09, 10, 11, 12" placeholder="00:00"
+          minuteValues="0,5,10,15,20,25,30,35,40,45,50,55"></ion-datetime>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title text-center>Cierre por la mañana</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-datetime formControlName="hourClosingMorning" displayFormat="HH:mm" doneText="Aceptar" text-center
+          cancelText="Cancelar" hourValues="06, 07, 08, 09, 10, 11, 12" placeholder="00:00"
+          minuteValues="0,5,10,15,20,25,30,35,40,45,50,55"></ion-datetime>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title text-center>Apertura por la tarde</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-datetime formControlName="hourOpeningAfternoon" displayFormat="HH:mm" doneText="Aceptar" text-center
+          cancelText="Cancelar" hourValues="06, 07, 08, 09, 10, 11, 12" placeholder="00:00"
+          minuteValues="0,5,10,15,20,25,30,35,40,45,50,55"></ion-datetime>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title text-center>Cierre por la tarde</ion-card-title>
+      </ion-card-header>
+      <div>
+        <ion-datetime formControlName="hourClosingAfternoon" displayFormat="HH:mm" doneText="Aceptar" text-center
+          cancelText="Cancelar" hourValues="06, 07, 08, 09, 10, 11, 12" placeholder="00:00"
+          minuteValues="0,5,10,15,20,25,30,35,40,45,50,55"></ion-datetime>
+      </div>
+    </ion-card>
+    <ion-card>
+      <ion-card-header no-padding>
+        <ion-card-title text-center margin-top>Descripción del templo</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea onchange="" minlength="1" maxlength="2500" formControlName="description" type="text"
+          (ionChange)="sizeInputs()"></ion-textarea>
+        <span>{{countDescription}}</span>
+      </ion-card-content>
+    </ion-card>
+    <ion-button color="dark" expand="full" type="submit" [disabled]="!formTemple.valid">Guardar</ion-button>
+    <ion-button color="dark" expand="full" type="button" (click)="cancel()">Cancelar</ion-button>
+  </form>
+</ion-content>
