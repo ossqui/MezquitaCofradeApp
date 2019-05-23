@@ -3,6 +3,7 @@ import { DataService } from './../services/data.service';
 import { Component, OnInit } from '@angular/core';
 import { MenuController, ModalController, LoadingController } from '@ionic/angular';
 import { TempleComponent } from '../components/temple/temple.component';
+import { AuthService } from './../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +18,7 @@ export class HomePage implements OnInit {
     private DataService: DataService,
     private ModalController: ModalController,
     private loadingController: LoadingController,
+    private AuthService: AuthService
   ) { }
 
   ngOnInit() {
@@ -26,7 +28,8 @@ export class HomePage implements OnInit {
       this.temples = temples;
       this.loadingController.dismiss();
 
-    })
+    });
+    this.AuthService.dateUser();
   }
 
   openTemple(temple:Temple){
@@ -42,7 +45,7 @@ export class HomePage implements OnInit {
     const loading = await this.loadingController.create({
       spinner: "bubbles",
       duration: 5000,
-      message: 'Guardando templo...',
+      message: 'Cargando templos',
     });
     return await loading.present();
   }

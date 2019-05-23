@@ -7,5 +7,13 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  
+  <ion-card-header>
+    <ion-card-title background="primary">{{temple.type}}{{temple.name}}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+      <ion-card-subtitle class="fontBlack padding6px">{{temple.hourOpeningMorning}} a {{temple.hourClosingMorning}} - {{temple.hourOpeningAfternoon}} a
+        {{temple.hourClosingAfternoon}}</ion-card-subtitle>
+      <ion-card-subtitle class="bgTertiary padding6px fontBlack noMarginTop">{{temple.ageConstruction}}</ion-card-subtitle>
+      <div class="marginTop10">{{temple.description}}</div>
+  </ion-card-content>
 </ion-content>

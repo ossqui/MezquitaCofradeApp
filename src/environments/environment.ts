@@ -12,8 +12,8 @@ export const environment = {
     storageBucket: "mezquitacofrade.appspot.com",
     messagingSenderId: "1030917506986",
     templeCollection: "temple",
-    imagenesColeccion: "imagenes",
-    usuarios: "usuarios"
+    imagesCollection: "imagenes",
+    user: "user"
   },
 
   currentLanguages: ['es', 'en'], //idiomas disponibles de la aplicación
