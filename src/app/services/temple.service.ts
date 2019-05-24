@@ -43,15 +43,15 @@ export class TempleService {
     if( hoa.length <= 15 && hoa.length > 0 && !isNullOrUndefined(hoa)){this.hourOpeningAfternoon = hoa;count = count + 1}
     if( hca.length <= 15 && hca.length > 0 && !isNullOrUndefined(hca)){this.hourCloseAfternoon = hca;count = count + 1}
     if(count == 5){
-      return true;
+      return Promise.resolve(true);
     }else{
       this.resetPart2();
-      return false;
+      return Promise.reject(false);
     }
   }
 
-  returnTemple(description: string, hom: string, hcm: string, hoa: string, hca: string){
-    if(this.part2(description, hom, hcm, hoa, hca)){
+  returnTemple(image:string){
+    if(!isNullOrUndefined(image)){
        this.templeGenerate = {
         name: this.name,
         type: this.type,
@@ -61,7 +61,8 @@ export class TempleService {
         hourOpeningMorning: this.hourOpeningMorning,
         hourClosingMorning: this.hourCloseMorning,
         hourOpeningAfternoon: this.hourOpeningAfternoon,
-        hourClosingAfternoon: this.hourCloseAfternoon
+        hourClosingAfternoon: this.hourCloseAfternoon,
+        image: image
       }
 
       return Promise.resolve(this.templeGenerate);

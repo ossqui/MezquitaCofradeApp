@@ -12,5 +12,6 @@ export interface Temple {
     hourClosingMorning?:string;
     hourOpeningAfternoon?:string;
     hourClosingAfternoon?:string;
+    image?: string;
 
 }

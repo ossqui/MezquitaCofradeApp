@@ -69,20 +69,16 @@ export class AddTemple2Page implements OnInit {
   savePart2() {
     this.formatHour();
     if (this.checkHourMorning() && this.checkHourAfternoon()) {
-      this.TempleService.returnTemple(
+      this.TempleService.part2(
         this.formTemple.get('description').value.trim(),
         this.hourOpeningMorning,
         this.hourClosingMorning,
         this.hourOpeningAfternoon,
         this.hourClosingAfternoon
-      ).then(temple => {
-        this.presentLoadingWithOptions();
-        this.DataService.addTemple(temple).then(() => {
-          this.loadingController.dismiss();
-          this.presentAlertButton("Templo guardado", "Se ha guardado el templo correctamente", "Aceptar");
-        }).catch(() => {
-          this.presentAlertNoAction("Templo no guardado", "Ha ocurrido un error y el templo no se ha guardado", "Aceptar");
-        })
+      ).then(() => {
+        this.Router.navigate(['/add-temple3']);
+      }).catch(() =>{
+        this.presentAlertNoAction("Error en el formulario", "Has introducido un valor no correcto", "Aceptar");
       });
     } else {
       this.presentAlertNoAction("Error en el horario", "Las horas de apertura no pueden ser superiores a las de cierre", "Aceptar");
