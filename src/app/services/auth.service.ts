@@ -13,7 +13,12 @@ import { user } from '../model/user';
 export class AuthService {
 
   private logged: boolean = null;
-  private user: user;
+  private user: user = {
+    uid:"",
+    name:"",
+    permisions:"",
+    email:""
+  }
 
   constructor(
     private AngularFireAuth: AngularFireAuth,
@@ -72,8 +77,17 @@ export class AuthService {
       }).catch(err => reject(err))
     })
   }
+
   returnUser(){
     return this.user;
+  }
+
+  returnPermisions(){
+    return this.user.permisions;
+  }
+
+  returnName(){
+    return this.user.name;
   }
 
   dateUser() {
