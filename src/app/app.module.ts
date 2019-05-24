@@ -15,6 +15,7 @@ import { environment } from './../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule, FirestoreSettingsToken } from "@angular/fire/firestore";
+import { Camera } from '@ionic-native/camera/ngx';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { AngularFirestoreModule, FirestoreSettingsToken } from "@angular/fire/fi
   ],
   providers: [
     StatusBar,
+    Camera,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {}}

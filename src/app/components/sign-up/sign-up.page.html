@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title color="light" text-center>Resgistrar usuario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-img src="..\..\assets\icon\Logo.png" id="icon"></ion-img>
+  <form [formGroup]="userForm" (ngSubmit)="signUp()">
+    <ion-label text-center color="dark">Nombre</ion-label>
+    <ion-input text-center type="text" formControlName="name"></ion-input>
+    <ion-label text-center color="dark">Correo</ion-label>
+    <ion-input text-center type="email" formControlName="email"></ion-input>
+    <ion-label text-center color="dark">Contraseña</ion-label>
+    <ion-input text-center type="password" formControlName="password"></ion-input>
+    <ion-button color="dark" expand="full" type="submit" [disabled]="!userForm.valid">Registrar usuario</ion-button>
+    <ion-label text-center class="marginTop10" routerLink="/login">Ya tengo usuario</ion-label>
+  </form> 
+</ion-content>

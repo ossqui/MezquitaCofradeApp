@@ -70,11 +70,11 @@ export class AddTemple2Page implements OnInit {
     this.formatHour();
     if (this.checkHourMorning() && this.checkHourAfternoon()) {
       this.TempleService.returnTemple(
+        this.formTemple.get('description').value.trim(),
         this.hourOpeningMorning,
         this.hourClosingMorning,
         this.hourOpeningAfternoon,
-        this.hourClosingAfternoon,
-        this.formTemple.get('description').value.trim()
+        this.hourClosingAfternoon
       ).then(temple => {
         this.presentLoadingWithOptions();
         this.DataService.addTemple(temple).then(() => {

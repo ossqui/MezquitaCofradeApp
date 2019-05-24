@@ -1,6 +1,6 @@
 <ion-app>
   <ion-split-pane>
-    <ion-menu side="end" menuId="custom" *ngIf="loginok()" >
+    <ion-menu side="end" menuId="custom" *ngIf="loginok()">
       <ion-header>
         <ion-toolbar color="primary">
           <ion-title>Menu</ion-title>
@@ -9,11 +9,10 @@
       <ion-content>
         <ion-content>
           <ion-list>
-            <ion-item type="button" (click)="goToAddTemplo()">Añadir templo</ion-item>
-            <ion-item>Añadir imagen</ion-item>
-            <ion-item>Gestionar usuarios</ion-item>
-            <ion-item>Menu Item</ion-item>
-            <ion-item>Menu Item</ion-item>
+            <ion-item>Mi perfil</ion-item>
+            <ion-item type="button" (click)="goToAddTemplo()" *ngIf="permisionsEditUser()">Añadir templo</ion-item>
+            <ion-item *ngIf="permisionsEditUser()">Añadir imagen</ion-item>
+            <ion-item *ngIf="permisionsAdminUser()">Gestionar usuarios</ion-item>
           </ion-list>
           <ion-button expand="full" color="secondary" (click)="logOut()">Logout</ion-button>
         </ion-content>

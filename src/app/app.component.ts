@@ -1,4 +1,4 @@
-import { Platform } from '@ionic/angular';
+import { Platform, ToastController } from '@ionic/angular';
 import { AuthService } from './services/auth.service';
 import { Component } from '@angular/core';
 import { MenuController } from '@ionic/angular';
@@ -7,12 +7,15 @@ import { Router } from '@angular/router';
 
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { user } from './model/user';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
+
+
 
   constructor(
     private platform: Platform,
@@ -21,6 +24,7 @@ export class AppComponent {
     private menu: MenuController,
     private AuthService: AuthService,
     private Router: Router,
+    public toastController: ToastController
   ) {
     this.initializeApp();
   }
@@ -28,9 +32,17 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-
     });
   }
+
+  async presentToast(name: string) {
+    const toast = await this.toastController.create({
+      message: 'Sesion iniciada con '+name,
+      duration: 2000
+    });
+    toast.present();
+  }
+
   loginok() {
     return this.AuthService.loginState();
   }
@@ -47,4 +59,19 @@ export class AppComponent {
     })
   }
 
+  permisionsEditUser(){
+    if((this.AuthService.returnPermisions()=="2") || (this.AuthService.returnPermisions()=="3")){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  permisionsAdminUser(){
+    if((this.AuthService.returnPermisions()=="3")){
+      return true;
+    }else{
+      return false;
+    }
+  }
 }

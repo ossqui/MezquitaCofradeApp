@@ -25,3 +25,43 @@
         color: red;
     }
 }
+
+.bgSecondary{
+    background-color: var(--ion-color-secondary);
+}
+.bgTertiary{
+    background-color:var(--ion-color-tertiary);
+}
+.borderLeft{
+    border-left: solid var(--ion-color-secondary) 1px;
+}
+.borderRight{
+    border-right: solid var(--ion-color-secondary) 1px;
+}
+.padding6px{
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+.fontWhite{
+    color: white;
+}
+.fontBlack{
+    color: black;
+}
+.noMarginTop{
+    margin-top: 0;
+}
+.noMarginBottom{
+    margin-bottom: 0;
+}
+.marginTop10{
+    margin-top: 10px;
+}
+#icon{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+    display: block;
+    border: none;
+}
