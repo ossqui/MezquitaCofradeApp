@@ -1,10 +1,10 @@
-import { DataService } from './../../../services/data.service';
+
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { TempleService } from "../../../services/temple.service";
 import { isNullOrUndefined } from 'util';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { LoadingController, AlertController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-add-temple2',
@@ -26,8 +26,6 @@ export class AddTemple2Page implements OnInit {
     private TempleService: TempleService,
     private Router: Router,
     private formBuilder: FormBuilder,
-    private DataService: DataService,
-    private loadingController: LoadingController,
     private alertController: AlertController
   ) {
     this.formTemple = this.formBuilder.group({
@@ -132,29 +130,7 @@ export class AddTemple2Page implements OnInit {
   /**
    * Muestra el spinner de carga
    */
-  async presentLoadingWithOptions(): Promise<void> {
-    const loading = await this.loadingController.create({
-      spinner: "bubbles",
-      duration: 5000,
-      message: 'Guardando templo...',
-    });
-    return await loading.present();
-  }
 
-  /** */
-  async presentAlertButton(messageHeader: string, message: string, textButton: string): Promise<void> {
-    const alert = await this.alertController.create({
-      header: messageHeader,
-      message: message,
-      buttons: [{
-        text: textButton,
-        handler: () => {
-          this.Router.navigate(['/home']);
-        }
-      }]
-    });
-    await alert.present();
-  }
 
   async presentAlertNoAction(messageHeader: string, message: string, textButton: string): Promise<void> {
     const alert = await this.alertController.create({

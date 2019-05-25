@@ -17,7 +17,7 @@
   <ion-list>
     <ion-item *ngFor ="let temple of temples" (click)="openTemple(temple)" >
       <ion-avatar slot="start">
-        <ion-img src="https://www.artencordoba.com/iglesias-fernandinas/FOTOS/SAN_LORENZO/IGLESIA_SAN_LORENZO_CORDOBA_51.jpg"></ion-img>
+        <ion-img src="{{temple.image}}"></ion-img>
       </ion-avatar>
       <ion-label>
         <h2> <b>{{temple.name}}</b> </h2>
