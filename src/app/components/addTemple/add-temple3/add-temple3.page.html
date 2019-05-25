@@ -1,9 +1,16 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>add-temple3</ion-title>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>Añadir templo</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
 <ion-content>
+    <ion-button color="dark" expand="full" type="button" (click)="photographic()">Cámara</ion-button>
+    <ion-button color="dark" expand="full" type="button" (click)="gallery()">Galería</ion-button>
+    <ion-img src="{{image}}" *ngIf="image!=null"></ion-img>
+    <ion-button color="dark" expand="full" type="button" [disabled]="disableButton()" (click)="saveTemple()">Guardar</ion-button>
 
 </ion-content>
