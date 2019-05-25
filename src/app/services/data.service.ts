@@ -1,3 +1,5 @@
+
+import { imageGallery } from './../model/imageGallery';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from "@angular/fire/firestore";
 import { environment } from 'src/environments/environment';
@@ -29,5 +31,23 @@ export class DataService {
 
   addTemple(temple: Temple) {
     return this.AngularFirestore.collection(environment.firebaseConfig.templeCollection).add(temple);
+  }
+
+  getImagesTemple(uid: String) {
+    let imagesGallery: imageGallery[] = [];
+    return new Promise <imageGallery[]> ((resolve, rejected) => {
+      this.AngularFirestore.collection(environment.firebaseConfig.imagesGallery).ref.where("idFather", "==", uid).get()
+        .then(images => {
+          images.docs.forEach(image => {
+            imagesGallery.push(image.data());
+          });
+          resolve(imagesGallery);
+        })
+        .catch(err => rejected(err));
+    })
+  }
+
+  addImageGallery(image: imageGallery){
+    return this.AngularFirestore.collection(environment.firebaseConfig.imagesGallery).add(image);
   }
 }

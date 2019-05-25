@@ -12,7 +12,8 @@ export const environment = {
     storageBucket: "mezquitacofrade.appspot.com",
     messagingSenderId: "1030917506986",
     templeCollection: "temple",
-    imagesCollection: "imagenes",
+    imagesGallery:"imageGallery",
+    scultureCollection: "sculture",
     user: "user"
   },
 

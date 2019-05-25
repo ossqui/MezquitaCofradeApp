@@ -7,14 +7,29 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  <ion-img src="{{temple.image}}"></ion-img>
   <ion-card-header>
-      <ion-img src="{{temple.image}}" ></ion-img>
     <ion-card-title background="primary">{{temple.type}}{{temple.name}}</ion-card-title>
   </ion-card-header>
   <ion-card-content>
-      <ion-card-subtitle class="fontBlack padding6px">{{temple.hourOpeningMorning}} a {{temple.hourClosingMorning}} - {{temple.hourOpeningAfternoon}} a
-        {{temple.hourClosingAfternoon}}</ion-card-subtitle>
-      <ion-card-subtitle class="bgTertiary padding6px fontBlack noMarginTop">{{temple.ageConstruction}}</ion-card-subtitle>
-      <div class="marginTop10">{{temple.description}}</div>
+    <ion-card-subtitle class="fontBlack padding6px">{{temple.hourOpeningMorning}} a {{temple.hourClosingMorning}} -
+      {{temple.hourOpeningAfternoon}} a
+      {{temple.hourClosingAfternoon}}</ion-card-subtitle>
+    <ion-card-subtitle class="bgTertiary padding6px fontBlack noMarginTop">{{temple.ageConstruction}}
+    </ion-card-subtitle>
+    <div class="marginTop10">{{temple.description}}</div>
   </ion-card-content>
+  <ion-text color="secondary"  text-center margin-top>
+      <h1>Galería de imagenes</h1>
+    </ion-text>
+    <ion-text color="secondary"  text-center margin-top *ngIf="!galleryisNull()">
+        <h3>No existen imagenes en la galería.</h3>
+      </ion-text>
+  <ion-slides pager="true" [options]="slideOpts" *ngIf="galleryisNull()">
+    <ion-slide *ngFor="let image of listImages">
+      <ion-img src="{{image.code}}"></ion-img>
+    </ion-slide>
+  </ion-slides>
+  <ion-button *ngIf="permisions()" color="dark" expand="full" type="button" (click)="photographic()">añadir imagen
+  </ion-button>
 </ion-content>
