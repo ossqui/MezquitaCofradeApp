@@ -27,6 +27,10 @@ export class TempleComponent implements OnInit {
     this.temple = this.NavParams.get('temple');
     this.DataService.getImagesTemple(this.temple.id).then(imagesGallery =>{
      this.listImages = imagesGallery;
+     this.listImages.forEach(element => {
+       console.log(element.id);
+       
+     });
     })
   }
 

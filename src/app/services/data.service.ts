@@ -1,3 +1,4 @@
+import { Carved } from './../model/carved';
 
 import { imageGallery } from './../model/imageGallery';
 import { Injectable } from '@angular/core';
@@ -39,7 +40,9 @@ export class DataService {
       this.AngularFirestore.collection(environment.firebaseConfig.imagesGallery).ref.where("idFather", "==", uid).get()
         .then(images => {
           images.docs.forEach(image => {
-            imagesGallery.push(image.data());
+            const img: imageGallery = image.data();
+            img.id = image.id;
+            imagesGallery.push(img);
           });
           resolve(imagesGallery);
         })
@@ -49,5 +52,9 @@ export class DataService {
 
   addImageGallery(image: imageGallery){
     return this.AngularFirestore.collection(environment.firebaseConfig.imagesGallery).add(image);
+  }
+
+  addCarved(carved: Carved){
+    return this.AngularFirestore.collection(environment.firebaseConfig.carved).add(carved);
   }
 }

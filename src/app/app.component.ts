@@ -50,7 +50,13 @@ export class AppComponent {
   goToAddTemplo() {
     this.menu.close('custom').then(() => {
       this.Router.navigate(['/add-temple1']);
-    })
+    });
+  }
+
+  goToAddCarved(){
+    this.menu.close('custom').then(() => {
+      this.Router.navigate(['/add-carved1']);
+    });
   }
 
   logOut() {

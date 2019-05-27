@@ -11,7 +11,7 @@
           <ion-list>
             <ion-item>Mi perfil</ion-item>
             <ion-item type="button" (click)="goToAddTemplo()" *ngIf="permisionsEditUser()">Añadir templo</ion-item>
-            <ion-item *ngIf="permisionsEditUser()">Añadir imagen</ion-item>
+            <ion-item *ngIf="permisionsEditUser()" (click)="goToAddCarved()">Añadir imagen</ion-item>
             <ion-item *ngIf="permisionsAdminUser()">Gestionar usuarios</ion-item>
           </ion-list>
           <ion-button expand="full" color="secondary" (click)="logOut()">Logout</ion-button>

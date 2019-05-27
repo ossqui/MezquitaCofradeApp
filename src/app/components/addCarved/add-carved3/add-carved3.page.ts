@@ -1,49 +1,29 @@
-import { DataService } from './../../../services/data.service';
-import { TempleService } from './../../../services/temple.service';
-import { Component, OnInit } from '@angular/core';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { isNullOrUndefined } from 'util';
+import { DataService } from './../../../services/data.service';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { CarvedService } from './../../../services/carved.service';
+import { Component, OnInit } from '@angular/core';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 @Component({
-  selector: 'app-add-temple3',
-  templateUrl: './add-temple3.page.html',
-  styleUrls: ['./add-temple3.page.scss'],
+  selector: 'app-add-carved3',
+  templateUrl: './add-carved3.page.html',
+  styleUrls: ['./add-carved3.page.scss'],
 })
-export class AddTemple3Page implements OnInit {
-
-  private image: string;
+export class AddCarved3Page implements OnInit {
+  private image = "";
 
   constructor(
     private camera: Camera,
-    private TempleService: TempleService,
-    private DataService: DataService,
+    private CarvedService: CarvedService,
     private Router: Router,
-    private loadingController: LoadingController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private DataService: DataService,
+    private loadingController: LoadingController
   ) { }
 
   ngOnInit() {
-  }
-
-  photographic() {
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      correctOrientation: true,
-      targetWidth: 200,
-      saveToPhotoAlbum: false
-    }
-
-    this.camera.getPicture(options).then((imageData) => {
-      this.image = 'data:image/jpeg;base64,' + imageData;
-
-    }, (err) => {
-      console.log(err);
-    });
   }
 
   gallery() {
@@ -66,21 +46,55 @@ export class AddTemple3Page implements OnInit {
     });
   }
 
-  saveTemple() {
+  photographic() {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      targetWidth: 200,
+      saveToPhotoAlbum: false
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+      this.image = 'data:image/jpeg;base64,' + imageData;
+
+    }, (err) => {
+      console.log(err);
+    });
+  }
+
+  saveCarved() {
     if (!isNullOrUndefined(this.image)) {
       this.presentLoadingWithOptions();
-      this.TempleService.returnTemple(this.image).then(temple => {
-        this.DataService.addTemple(temple).then(() => {
-          this.loadingController.dismiss();
-          this.presentAlertButton("Templo añadido", "Se ha añadido el templo correctamente", "Aceptar");
+      this.CarvedService.returnCarved(this.image)
+        .then(carved => {
+          this.DataService.addCarved(carved).then(() => {
+            this.loadingController.dismiss();
+            this.presentAlertButton("Talla añadida", "Se ha añadido la talla correctamente", "Aceptar");
+          })
+            .catch(() => {
+              this.loadingController.dismiss();
+              this.presentAlertSimple("Talla no añadida", "No se ha añadido la talla por algun error.", "Aceptar");
+            });
         }).catch(() => {
-          this.loadingController.dismiss();
-          this.presentAlertSimple("Templo no añadido", "No se ha añadido el templo por algun error.", "Aceptar");
+          this.presentAlertSimple("Talla no añadida", "La imagen principal es obligatoria", "Aceptar");
         });
-      });
-    }else{
-      this.presentAlertSimple("Templo no añadido", "La imagen principal es obligatoria", "Aceptar");
     }
+  }
+
+  resetDate() {
+    this.image = "";
+  }
+
+  /**
+   * Cancela todo los datos y redirige a home
+   */
+  cancel() {
+    this.resetDate();
+    this.CarvedService.resetCarved();
+    this.Router.navigate(['/home']);
   }
 
   disableButton() {
