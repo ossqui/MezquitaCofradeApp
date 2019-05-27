@@ -148,6 +148,7 @@ export class AddCarved1Page implements OnInit {
    */
   cancel() {
     this.resetDate();
+    this.CarvedService.resetCarved();
     this.Router.navigate(['/home']);
   }
 }

@@ -10,5 +10,6 @@ export interface Carved {
     description?: string;
     image?: string;
     brotherhood?: string;
-
+    processionDay?:string;
+    temple?: string
 }

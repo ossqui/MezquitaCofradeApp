@@ -14,7 +14,6 @@ export class CarvedService {
   private note: string;
   private material: string;
   private description: string;
-  private image: string;
   private brotherhood: string;
   private processionDay: string;
   private temple: string;
@@ -33,6 +32,7 @@ export class CarvedService {
       if (count == 5) {
         return resolve(true);
       } else {
+        this.resetPart2();
         return rejected(false);
       }
     })
@@ -41,7 +41,7 @@ export class CarvedService {
 
   part2(brotherhood: string, processionDay: string, description: string, temple: string) {
     var count = 0;
-    
+
     if (brotherhood.length <= 100 && brotherhood.length > 0 && !isNullOrUndefined(brotherhood)) { this.brotherhood = brotherhood; count = count + 1; };
     if (processionDay.length <= 40 && processionDay.length > 0 && !isNullOrUndefined(processionDay)) { this.processionDay = processionDay; count = count + 1; };
     if (description.length <= 40 && description.length > 0 && !isNullOrUndefined(description)) { this.description = description; count = count + 1; };
@@ -51,8 +51,49 @@ export class CarvedService {
       if (count == 4) {
         return resolve(true);
       } else {
+        this.resetPart2()
         return rejected(false);
       }
-    })
+    });
+  }
+
+  returnCarved(image: string) {
+    if (!isNullOrUndefined(image)) {
+      this.carved = {
+        name: this.name,
+        author: this.author,
+        ageOfCarved: this.ageOfCarved,
+        style: this.style,
+        material: this.material,
+        description: this.description,
+        image: image,
+        brotherhood: this.brotherhood,
+        processionDay: this.processionDay,
+        temple: this.temple,
+      }
+    }
+    console.log(this.carved);
+    
+    return Promise.resolve(this.carved);
+  }
+
+  resetCarved(){
+    this.carved = {};
+    this.resetPart1();
+    this.resetPart2();
+  }
+
+  resetPart1(){
+    this.name = "";
+    this.author = "";
+    this.ageOfCarved = "";
+    this.style = "";
+    this.material = "";
+  }
+  resetPart2(){
+    this.description = "";
+    this.temple = "";
+    this.material = "";
+    this.processionDay = "";
   }
 }

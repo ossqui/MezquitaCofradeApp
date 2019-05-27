@@ -1,3 +1,4 @@
+import { Carved } from './../model/carved';
 
 import { imageGallery } from './../model/imageGallery';
 import { Injectable } from '@angular/core';
@@ -51,5 +52,9 @@ export class DataService {
 
   addImageGallery(image: imageGallery){
     return this.AngularFirestore.collection(environment.firebaseConfig.imagesGallery).add(image);
+  }
+
+  addCarved(carved: Carved){
+    return this.AngularFirestore.collection(environment.firebaseConfig.carved).add(carved);
   }
 }

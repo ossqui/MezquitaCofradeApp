@@ -1,4 +1,3 @@
-import { Temple } from 'src/app/model/temple';
 import { DataService } from './../../../services/data.service';
 import { TempleService } from './../../../services/temple.service';
 import { Component, OnInit } from '@angular/core';
@@ -68,13 +67,20 @@ export class AddTemple3Page implements OnInit {
   }
 
   saveTemple() {
-    this.TempleService.returnTemple(this.image).then(temple => {
-      this.DataService.addTemple(temple).then(()=>{
-        this.presentAlertButton("Templo añadido","Se ha añadido el templo correctamente","Aceptar");
-      }).catch(()=>{
-        this.presentAlertSimple("Templo no añadido","No se ha añadido el templo por algun error.","Aceptar");
+    if (!isNullOrUndefined(this.image)) {
+      this.presentLoadingWithOptions();
+      this.TempleService.returnTemple(this.image).then(temple => {
+        this.DataService.addTemple(temple).then(() => {
+          this.loadingController.dismiss();
+          this.presentAlertButton("Templo añadido", "Se ha añadido el templo correctamente", "Aceptar");
+        }).catch(() => {
+          this.loadingController.dismiss();
+          this.presentAlertSimple("Templo no añadido", "No se ha añadido el templo por algun error.", "Aceptar");
+        });
       });
-    });
+    }else{
+      this.presentAlertSimple("Templo no añadido", "La imagen principal es obligatoria", "Aceptar");
+    }
   }
 
   disableButton() {

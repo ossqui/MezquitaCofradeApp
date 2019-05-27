@@ -13,7 +13,7 @@ export const environment = {
     messagingSenderId: "1030917506986",
     templeCollection: "temple",
     imagesGallery:"imageGallery",
-    scultureCollection: "sculture",
+    carved: "carved",
     user: "user"
   },
 
