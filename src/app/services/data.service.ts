@@ -50,6 +50,22 @@ export class DataService {
     })
   }
 
+  getCarvedTemple(temple: String) {
+    let carvedCollection: Carved[] = [];
+    return new Promise <Carved[]> ((resolve, rejected) => {
+      this.AngularFirestore.collection(environment.firebaseConfig.carved).ref.where("temple", "==", temple).get()
+        .then(images => {
+          images.docs.forEach(image => {
+            const img: imageGallery = image.data();
+            img.id = image.id;
+            carvedCollection.push(img);
+          });
+          resolve(carvedCollection);
+        })
+        .catch(err => rejected(err));
+    })
+  }
+
   addImageGallery(image: imageGallery){
     return this.AngularFirestore.collection(environment.firebaseConfig.imagesGallery).add(image);
   }

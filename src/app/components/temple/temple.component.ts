@@ -1,3 +1,4 @@
+import { Carved } from './../../model/carved';
 import { DataService } from './../../services/data.service';
 import { AuthService } from './../../services/auth.service';
 import { ModalController, NavParams } from '@ionic/angular';
@@ -14,6 +15,7 @@ import { imageGallery } from 'src/app/model/imageGallery';
 export class TempleComponent implements OnInit {
   listImages: imageGallery[] = [];
   temple: Temple;
+  carvedList: Carved[]= [];
 
   constructor(
     private camera: Camera,
@@ -27,10 +29,9 @@ export class TempleComponent implements OnInit {
     this.temple = this.NavParams.get('temple');
     this.DataService.getImagesTemple(this.temple.id).then(imagesGallery =>{
      this.listImages = imagesGallery;
-     this.listImages.forEach(element => {
-       console.log(element.id);
-       
-     });
+    });
+    this.DataService.getCarvedTemple(this.temple.id).then(carvedCollection =>{
+      this.carvedList = carvedCollection;
     })
   }
 
