@@ -17,11 +17,11 @@ export class AddCarved1Page implements OnInit {
   private style: string = "";
   private material: string = "";
 
-  private countName: number;
-  private countAuthor: number;
-  private countAgeOfCarved: number;
-  private countStyle: number;
-  private countMaterial: number;
+  private countName: number = 60;
+  private countAuthor: number = 40;
+  private countAgeOfCarved: number = 20;
+  private countStyle: number = 50;
+  private countMaterial: number = 40;
 
   public formCarved: FormGroup;
 
@@ -49,6 +49,46 @@ export class AddCarved1Page implements OnInit {
     this.ageOfCarved = this.formCarved.get('ageOfCarved').value.trim();
     this.style = this.formCarved.get('style').value.trim();
     this.material = this.formCarved.get('material').value.trim();
+    if (this.name != null) {
+      var aux = 60 - this.name.length;
+      if (this.countName > aux && aux >= 0) {
+        this.countName = aux;
+      } else if (this.countName < aux && aux <= 60) {
+        this.countName = aux;
+      }
+    }
+    if (this.author != null) {
+      var aux = 40 - this.author.length;
+      if (this.countAuthor > aux && aux >= 0) {
+        this.countAuthor = aux;
+      } else if (this.countAuthor < aux && aux <= 40) {
+        this.countAuthor = aux;
+      }
+    }
+    if (this.ageOfCarved != null) {
+      var aux = 40 - this.ageOfCarved.length;
+      if (this.countAgeOfCarved > aux && aux >= 0) {
+        this.countAgeOfCarved = aux;
+      } else if (this.countAgeOfCarved < aux && aux <= 40) {
+        this.countAgeOfCarved = aux;
+      }
+    }
+    if (this.style != null) {
+      var aux = 40 - this.style.length;
+      if (this.countStyle > aux && aux >= 0) {
+        this.countStyle = aux;
+      } else if (this.countStyle < aux && aux <= 40) {
+        this.countStyle = aux;
+      }
+    }
+    if (this.material != null) {
+      var aux = 40 - this.material.length;
+      if (this.countMaterial > aux && aux >= 0) {
+        this.countMaterial = aux;
+      } else if (this.countMaterial < aux && aux <= 40) {
+        this.countMaterial = aux;
+      }
+    }
   }
 
   savePart1() {
@@ -74,12 +114,12 @@ export class AddCarved1Page implements OnInit {
       })
       .catch(() => {
 
-        this.presentAlert("Importante", "No se puede rellenar campos unicamente con espacios", "Aceptar");
+        this.presentAlert("Importante", "No se puede rellenar campos unicamente con espacios o mas caracteres de lo permitido", "Aceptar");
 
       })
   }
 
-  resetDate(){
+  resetDate() {
     this.formCarved = this.formBuilder.group({
       name: ['', Validators.required],
       author: ['', Validators.required],
@@ -106,7 +146,7 @@ export class AddCarved1Page implements OnInit {
   /**
    * Cancela todo los datos y redirige a home
    */
-  cancel(){
+  cancel() {
     this.resetDate();
     this.Router.navigate(['/home']);
   }

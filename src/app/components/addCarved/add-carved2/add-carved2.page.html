@@ -1,9 +1,57 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>addCarved2</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Añadir talla</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <form [formGroup]="formCarved" (ngSubmit)="savePart2()">
+    <ion-card>
+      <ion-card-header no-padding>
+        <ion-card-title text-center margin-top>Hermandad</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-input minlength="1" maxlength="100" formControlName="brotherhood" type="text" (ionChange)="sizeInputs()">
+        </ion-input>
+        <span>{{countbrotherhood}}</span>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header no-padding>
+        <ion-card-title text-center margin-top>Día de salida</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-input minlength="1" maxlength="100" formControlName="processionDay" type="text" (ionChange)="sizeInputs()">
+        </ion-input>
+        <span>{{countProcessionDay}}</span>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header no-padding>
+        <ion-card-title text-center margin-top>Templo donde se ubica</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-select interface="action-sheet" placeholder="Selecciona el templo" formControlName="temple" cancel-text="Cancelar">
+          <ion-select-option *ngFor="let item of listTemples;let i = index" value="{{item.id}}">{{item.name}}
+          </ion-select-option>
+        </ion-select>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header no-padding>
+        <ion-card-title text-center margin-top>Descripción de la talla</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea onchange="" minlength="1" maxlength="2500" formControlName="description" type="text" (ionChange)="sizeInputs()">
+        </ion-textarea>
+        <span>{{countDescription}}</span>
+      </ion-card-content>
+    </ion-card>
 
+    <ion-button color="dark" expand="full" type="submit" [disabled]="!formCarved.valid">Siguiente</ion-button>
+    <ion-button color="dark" expand="full" type="button" (click)="cancel()">Cancelar</ion-button>
+  </form>
 </ion-content>
