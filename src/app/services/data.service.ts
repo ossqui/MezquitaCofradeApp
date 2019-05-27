@@ -39,7 +39,9 @@ export class DataService {
       this.AngularFirestore.collection(environment.firebaseConfig.imagesGallery).ref.where("idFather", "==", uid).get()
         .then(images => {
           images.docs.forEach(image => {
-            imagesGallery.push(image.data());
+            const img: imageGallery = image.data();
+            img.id = image.id;
+            imagesGallery.push(img);
           });
           resolve(imagesGallery);
         })
