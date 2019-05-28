@@ -81,7 +81,6 @@ export class DataService {
     this.getCarvedTemple(id).subscribe(Carved => {
       //recorro la lista de tallas de una en una y las elimino
       Carved.forEach(carved => {
-        console.log("talla");
         this.deleteCarved(carved.id);
       });
     });
@@ -89,11 +88,9 @@ export class DataService {
     this.getImages(id).then(imagesTemple => {
       //recorro la lista de imagenes de una en una y las elimino
       imagesTemple.forEach(image => {
-        console.log("imagen de templo");
         this.deleteImage(image.id);
       });
     });
-    console.log("templo");
     return new Promise<boolean>((resolve, rejected) => {
       this.AngularFirestore.collection(environment.firebaseConfig.templeCollection).doc(id).delete()
         .then(() => {
@@ -113,7 +110,6 @@ export class DataService {
           this.getImages(id).then(imagesCarved => {
             //recorro la lista de la galería de la talla y las elimino de una en una
             imagesCarved.forEach(image => {
-              console.log("imagen de talla");
               this.deleteImage(image.id);
             });
           });

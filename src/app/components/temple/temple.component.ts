@@ -3,7 +3,7 @@ import { CarvedComponent } from './../carved/carved.component';
 import { Carved } from './../../model/carved';
 import { DataService } from './../../services/data.service';
 import { AuthService } from './../../services/auth.service';
-import { ModalController, NavParams } from '@ionic/angular';
+import { ModalController, NavParams, AlertController, ToastController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { Temple } from 'src/app/model/temple';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -25,10 +25,12 @@ export class TempleComponent implements OnInit {
     private NavParams: NavParams,
     private AuthService: AuthService,
     private DataService: DataService,
-    private ConectService: ConectService
-  ) { 
-    this.ConectService.getMessage().subscribe(answell=>{
-      if(answell){
+    private ConectService: ConectService,
+    private alertController: AlertController,
+    private toastController: ToastController
+  ) {
+    this.ConectService.getMessage().subscribe(answell => {
+      if (answell) {
         this.DataService.getCarvedTemple(this.temple.id).subscribe(carvedCollection => {
           this.carvedList = carvedCollection;
         })
@@ -95,19 +97,7 @@ export class TempleComponent implements OnInit {
   }
 
   deleteTemple(id: string) {
-    this.ModalController.dismiss()
-      .then(() => {
-        this.DataService.deleteTemple(id)
-          .then(() => {
-            console.log("Templo eliminado");
-          })
-          .catch(() => {
-            console.log("templo no eliminado");
-          })
-      })
-      .catch(err => {
-        console.log("ha ocurrido un error"+err);
-      })
+    this.presentAlertConfirm(id);
   }
 
   permisions() {
@@ -116,5 +106,48 @@ export class TempleComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  async presentAlertConfirm(id: string) {
+    const alert = await this.alertController.create({
+      header: 'Eliminar templo',
+      message: '¿Estas seguro de eliminar el templo?. Se eliminarán todos los datos incluidas sus tallas y galerías.',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            this.presentToast("No se eliminó el templo");
+          }
+        }, {
+          text: 'Aceptar',
+          handler: () => {
+            this.ModalController.dismiss()
+              .then(() => {
+                this.DataService.deleteTemple(id)
+                  .then(() => {
+                    this.presentToast("Se elimino el templo");
+                  })
+                  .catch(() => {
+                    this.presentToast("No se eliminó el templo");
+                  })
+              })
+              .catch(err => {
+                console.log("ha ocurrido un error" + err);
+              })
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async presentToast(text: string) {
+    const toast = await this.toastController.create({
+      message: text,
+      duration: 2000
+    });
+    toast.present();
   }
 }

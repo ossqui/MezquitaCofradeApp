@@ -3,7 +3,7 @@ import { TempleService } from './../../../services/temple.service';
 import { Component, OnInit } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { isNullOrUndefined } from 'util';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({
@@ -21,7 +21,8 @@ export class AddTemple3Page implements OnInit {
     private DataService: DataService,
     private Router: Router,
     private loadingController: LoadingController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private toastController: ToastController
   ) { }
 
   ngOnInit() {
@@ -68,37 +69,14 @@ export class AddTemple3Page implements OnInit {
 
   saveTemple() {
     if (!isNullOrUndefined(this.image)) {
-      this.presentLoadingWithOptions();
-      this.TempleService.returnTemple(this.image).then(temple => {
-        this.DataService.addTemple(temple).then(() => {
-          this.loadingController.dismiss();
-          this.presentAlertButton("Templo añadido", "Se ha añadido el templo correctamente", "Aceptar");
-        }).catch(() => {
-          this.loadingController.dismiss();
-          this.presentAlertSimple("Templo no añadido", "No se ha añadido el templo por algun error.", "Aceptar");
-        });
-      });
-    }else{
+      this.presentAlertConfirm();
+    } else {
       this.presentAlertSimple("Templo no añadido", "La imagen principal es obligatoria", "Aceptar");
     }
   }
 
   disableButton() {
     return isNullOrUndefined(this.image);
-  }
-
-  async presentAlertButton(messageHeader: string, message: string, textButton: string): Promise<void> {
-    const alert = await this.alertController.create({
-      header: messageHeader,
-      message: message,
-      buttons: [{
-        text: textButton,
-        handler: () => {
-          this.Router.navigate(['/home']);
-        }
-      }]
-    });
-    await alert.present();
   }
 
   async presentAlertSimple(messageHeader: string, message: string, textButton: string): Promise<void> {
@@ -117,5 +95,47 @@ export class AddTemple3Page implements OnInit {
       message: 'Guardando templo...',
     });
     return await loading.present();
+  }
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      header: 'Añadir templo',
+      message: '¿Estas seguro de añadir el templo?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            this.presentToast("No se añadió el templo");
+            return false;
+          }
+        }, {
+          text: 'Aceptar',
+          handler: () => {
+            this.presentLoadingWithOptions();
+            this.TempleService.returnTemple(this.image).then(temple => {
+              this.DataService.addTemple(temple).then(() => {
+                this.loadingController.dismiss();
+                this.Router.navigate(['/home']);
+                this.presentToast("Templo añadido.")
+              }).catch(() => {
+                this.loadingController.dismiss();
+                this.presentToast("Templo no añadido");
+              });
+            });
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async presentToast(text: string) {
+    const toast = await this.toastController.create({
+      message: text,
+      duration: 2000
+    });
+    toast.present();
   }
 }

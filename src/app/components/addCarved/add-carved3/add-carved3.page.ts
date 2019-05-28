@@ -1,6 +1,6 @@
 import { isNullOrUndefined } from 'util';
 import { DataService } from './../../../services/data.service';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { CarvedService } from './../../../services/carved.service';
 import { Component, OnInit } from '@angular/core';
@@ -20,7 +20,8 @@ export class AddCarved3Page implements OnInit {
     private Router: Router,
     private alertController: AlertController,
     private DataService: DataService,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private toastController: ToastController
   ) { }
 
   ngOnInit() {
@@ -67,20 +68,9 @@ export class AddCarved3Page implements OnInit {
 
   saveCarved() {
     if (!isNullOrUndefined(this.image)) {
-      this.presentLoadingWithOptions();
-      this.CarvedService.returnCarved(this.image)
-        .then(carved => {
-          this.DataService.addCarved(carved).then(() => {
-            this.loadingController.dismiss();
-            this.presentAlertButton("Talla añadida", "Se ha añadido la talla correctamente", "Aceptar");
-          })
-            .catch(() => {
-              this.loadingController.dismiss();
-              this.presentAlertSimple("Talla no añadida", "No se ha añadido la talla por algun error.", "Aceptar");
-            });
-        }).catch(() => {
-          this.presentAlertSimple("Talla no añadida", "La imagen principal es obligatoria", "Aceptar");
-        });
+      this.presentAlertConfirm()
+    }else{
+      this.presentAlertSimple("Talla no añadida", "La imagen principal es obligatoria", "Aceptar");
     }
   }
 
@@ -101,19 +91,6 @@ export class AddCarved3Page implements OnInit {
     return isNullOrUndefined(this.image);
   }
 
-  async presentAlertButton(messageHeader: string, message: string, textButton: string): Promise<void> {
-    const alert = await this.alertController.create({
-      header: messageHeader,
-      message: message,
-      buttons: [{
-        text: textButton,
-        handler: () => {
-          this.Router.navigate(['/home']);
-        }
-      }]
-    });
-    await alert.present();
-  }
 
   async presentAlertSimple(messageHeader: string, message: string, textButton: string): Promise<void> {
     const alert = await this.alertController.create({
@@ -131,5 +108,47 @@ export class AddCarved3Page implements OnInit {
       message: 'Guardando talla...',
     });
     return await loading.present();
+  }
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      header: 'Añadir templo',
+      message: '¿Estas seguro de añadir el templo?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            this.presentToast("No se añadió el templo");
+            return false;
+          }
+        }, {
+          text: 'Aceptar',
+          handler: () => {
+            this.presentLoadingWithOptions();
+            this.CarvedService.returnCarved(this.image).then(carved => {
+              this.DataService.addCarved(carved).then(() => {
+                this.loadingController.dismiss();
+                this.Router.navigate(['/home']);
+                this.presentToast("Talla añadida.")
+              }).catch(() => {
+                this.loadingController.dismiss();
+                this.presentToast("Talla no añadida");
+              });
+            });
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async presentToast(text: string) {
+    const toast = await this.toastController.create({
+      message: text,
+      duration: 2000
+    });
+    toast.present();
   }
 }
