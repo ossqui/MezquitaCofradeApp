@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { Temple } from '../model/temple';
 import { map } from 'rxjs/operators';
 import { isNullOrUndefined } from 'util';
+import { from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -53,7 +54,7 @@ export class DataService {
 
   getCarvedTemple(temple: string) {
     let carvedCollection: Carved[] = [];
-    return new Promise<Carved[]>((resolve, rejected) => {
+    return from (new Promise<Carved[]>((resolve, rejected) => {
       this.AngularFirestore.collection(environment.firebaseConfig.carved).ref.where("temple", "==", temple).get()
         .then(images => {
           images.docs.forEach(image => {
@@ -64,7 +65,7 @@ export class DataService {
           resolve(carvedCollection);
         })
         .catch(err => rejected(err));
-    })
+    }))
   }
 
   addImageGallery(image: imageGallery) {
@@ -77,17 +78,9 @@ export class DataService {
 
   deleteTemple(id: string) {
     //recupero la lista de tallas de un templo
-    this.getCarvedTemple(id).then(Carved => {
+    this.getCarvedTemple(id).subscribe(Carved => {
       //recorro la lista de tallas de una en una y las elimino
       Carved.forEach(carved => {
-        //recupero la lista de imagenes de la galería de la talla
-        this.getImages(carved.id).then(imagesCarved => {
-          //recorro la lista de la galería de la talla y las elimino de una en una
-          imagesCarved.forEach(image => {
-            console.log("imagen de talla");
-            this.deleteImage(image.id);
-          });
-        });
         console.log("talla");
         this.deleteCarved(carved.id);
       });
@@ -116,6 +109,14 @@ export class DataService {
     return new Promise<boolean>((resolve, rejected) => {
       this.AngularFirestore.collection(environment.firebaseConfig.carved).doc(id).delete()
         .then(() => {
+          //recupero la lista de imagenes de la galería de la talla
+          this.getImages(id).then(imagesCarved => {
+            //recorro la lista de la galería de la talla y las elimino de una en una
+            imagesCarved.forEach(image => {
+              console.log("imagen de talla");
+              this.deleteImage(image.id);
+            });
+          });
           resolve(true);
         })
         .catch(() => {

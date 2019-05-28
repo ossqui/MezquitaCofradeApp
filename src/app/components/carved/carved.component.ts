@@ -78,4 +78,20 @@ export class CarvedComponent implements OnInit {
       return false;
     }
   }
+
+  deleteCarved(id: string) {
+    this.ModalController.dismiss()
+      .then(() => {
+        this.DataService.deleteCarved(id)
+          .then(() => {
+            console.log("Talla eliminada");
+          })
+          .catch(() => {
+            console.log("Talla no eliminada");
+          })
+      })
+      .catch(err => {
+        console.log("ha ocurrido un error"+err);
+      })
+  }
 }

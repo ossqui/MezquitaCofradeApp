@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content padding>
-  <ion-button *ngIf="permisions()" color="danger" expand="full" type="button">Eliminar templo
+  <ion-button *ngIf="permisions()" color="danger" expand="full" type="button" (click)="deleteCarved(carved.id)">Eliminar templo
   </ion-button>
   <ion-img margin-top src="{{carved.image}}"></ion-img>
   <ion-card-title margin-top>{{carved.name}}</ion-card-title>

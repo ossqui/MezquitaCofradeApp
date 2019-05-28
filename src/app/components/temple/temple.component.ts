@@ -40,7 +40,7 @@ export class TempleComponent implements OnInit {
     this.DataService.getImages(this.temple.id).then(imagesGallery => {
       this.listImages = imagesGallery;
     });
-    this.DataService.getCarvedTemple(this.temple.id).then(carvedCollection => {
+    this.DataService.getCarvedTemple(this.temple.id).subscribe(carvedCollection => {
       this.carvedList = carvedCollection;
     })
   }
@@ -96,7 +96,7 @@ export class TempleComponent implements OnInit {
           })
       })
       .catch(err => {
-        console.log(err);
+        console.log("ha ocurrido un error"+err);
       })
   }
 
