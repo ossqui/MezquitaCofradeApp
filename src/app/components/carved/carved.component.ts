@@ -1,3 +1,4 @@
+import { ConectService } from './../../services/conect.service';
 import { AuthService } from './../../services/auth.service';
 import { DataService } from './../../services/data.service';
 import { Carved } from './../../model/carved';
@@ -20,7 +21,8 @@ export class CarvedComponent implements OnInit {
     private ModalController: ModalController,
     private NavParams: NavParams,
     private DataService: DataService,
-    private AuthService: AuthService
+    private AuthService: AuthService,
+    private ConectService: ConectService
   ) { }
 
   ngOnInit() {
@@ -85,6 +87,7 @@ export class CarvedComponent implements OnInit {
         this.DataService.deleteCarved(id)
           .then(() => {
             console.log("Talla eliminada");
+            this.ConectService.sendMessage(true);
           })
           .catch(() => {
             console.log("Talla no eliminada");
