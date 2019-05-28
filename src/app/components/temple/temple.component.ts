@@ -1,3 +1,4 @@
+import { CarvedComponent } from './../carved/carved.component';
 import { Carved } from './../../model/carved';
 import { DataService } from './../../services/data.service';
 import { AuthService } from './../../services/auth.service';
@@ -15,7 +16,7 @@ import { imageGallery } from 'src/app/model/imageGallery';
 export class TempleComponent implements OnInit {
   listImages: imageGallery[] = [];
   temple: Temple;
-  carvedList: Carved[]= [];
+  carvedList: Carved[] = [];
 
   constructor(
     private camera: Camera,
@@ -25,12 +26,21 @@ export class TempleComponent implements OnInit {
     private DataService: DataService
   ) { }
 
+  openCarved(carved: Carved) {
+    this.ModalController.create({
+      component: CarvedComponent,
+      componentProps: {
+        carved: carved
+      }
+    }).then((modal) => modal.present())
+  }
+
   ngOnInit() {
     this.temple = this.NavParams.get('temple');
-    this.DataService.getImagesTemple(this.temple.id).then(imagesGallery =>{
-     this.listImages = imagesGallery;
+    this.DataService.getImages(this.temple.id).then(imagesGallery => {
+      this.listImages = imagesGallery;
     });
-    this.DataService.getCarvedTemple(this.temple.id).then(carvedCollection =>{
+    this.DataService.getCarvedTemple(this.temple.id).then(carvedCollection => {
       this.carvedList = carvedCollection;
     })
   }
@@ -39,16 +49,16 @@ export class TempleComponent implements OnInit {
     this.ModalController.dismiss();
   }
 
-  galleryisNull(){
-    if(this.listImages.length>0){
+  galleryisNull() {
+    if (this.listImages.length > 0) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
 
   photographic() {
-    var image:imageGallery;
+    var image: imageGallery;
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -65,15 +75,30 @@ export class TempleComponent implements OnInit {
         code: 'data:image/jpeg;base64,' + imageData
       }
       this.DataService.addImageGallery(image);
-      this.DataService.getImagesTemple(this.temple.id).then(imagesGallery =>{
+      this.DataService.getImages(this.temple.id).then(imagesGallery => {
         this.listImages = imagesGallery;
-       })
+      })
 
     }, (err) => {
       console.log(err);
     });
   }
 
+  deleteTemple(id: string) {
+    this.ModalController.dismiss()
+      .then(() => {
+        this.DataService.deleteTemple(id)
+          .then(() => {
+            console.log("Templo eliminado");
+          })
+          .catch(() => {
+            console.log("templo no eliminado");
+          })
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
 
   permisions() {
     if ((this.AuthService.returnPermisions() == "2") || (this.AuthService.returnPermisions() == "3")) {
