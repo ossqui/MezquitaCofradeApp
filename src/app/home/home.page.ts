@@ -39,6 +39,7 @@ export class HomePage implements OnInit {
         temple: temple
       }
     }).then((modal) => modal.present())
+    .catch(()=>{})
   }
 
   async presentLoadingWithOptions() {

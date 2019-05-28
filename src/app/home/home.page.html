@@ -1,21 +1,21 @@
 <ion-header>
-    <ion-toolbar color="primary" no-padding>
-      <ion-buttons slot="start">
-        <ion-menu-toggle>
-          <ion-button>
-            <ion-icon slot="icon-only" name="menu"></ion-icon>
-          </ion-button>
-        </ion-menu-toggle>
-      </ion-buttons>
-      <ion-title>
-        <span style="font-weight:normal">Mezquita Cofrade</span>
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar color="primary" no-padding>
+    <ion-buttons slot="start">
+      <ion-menu-toggle>
+        <ion-button>
+          <ion-icon slot="icon-only" name="menu"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+    <ion-title>
+      <span style="font-weight:normal">Mezquita Cofrade</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor ="let temple of temples" (click)="openTemple(temple)" >
+    <ion-item *ngFor="let temple of temples" (click)="openTemple(temple)">
       <ion-avatar slot="start">
         <ion-img src="{{temple.image}}"></ion-img>
       </ion-avatar>
@@ -24,6 +24,5 @@
         <p>{{temple.type}}</p>
       </ion-label>
     </ion-item>
-  
-</ion-list>
+  </ion-list>
 </ion-content>

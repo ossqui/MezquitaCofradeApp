@@ -7,9 +7,12 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  <ion-button *ngIf="permisions()" color="danger" expand="full" type="button" (click)="deleteTemple(temple.id)">Eliminar templo
+  </ion-button>
   <ion-img src="{{temple.image}}"></ion-img>
   <ion-card-header>
-    <ion-card-title background="primary">{{temple.type}}{{temple.name}}</ion-card-title>
+    <ion-card-subtitle text-center>{{temple.type}}</ion-card-subtitle>
+    <ion-card-title background="primary">{{temple.name}}</ion-card-title>
   </ion-card-header>
   <ion-card-content>
     <ion-card-subtitle class="fontBlack padding6px">{{temple.hourOpeningMorning}} a {{temple.hourClosingMorning}} -
@@ -19,12 +22,25 @@
     </ion-card-subtitle>
     <div class="marginTop10">{{temple.description}}</div>
   </ion-card-content>
-  <ion-text color="secondary"  text-center margin-top>
-      <h1>Galería de imagenes</h1>
-    </ion-text>
-    <ion-text color="secondary"  text-center margin-top *ngIf="!galleryisNull()">
-        <h3>No existen imagenes en la galería.</h3>
-      </ion-text>
+  <ion-text color="secondary" text-center margin-top>
+    <h1>Tallas del templo</h1>
+  </ion-text>
+  <ion-list padding>
+    <ion-item *ngFor="let carved of carvedList" (click)="openCarved(carved)">
+      <ion-avatar slot="start">
+        <ion-img src="{{carved.image}}"></ion-img>
+      </ion-avatar>
+      <ion-label>
+        <h2> <b>{{carved.name}}</b> </h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-text color="secondary" text-center margin-top>
+    <h1>Galería de imagenes</h1>
+  </ion-text>
+  <ion-text color="secondary" text-center margin-top *ngIf="!galleryisNull()">
+    <h3>No existen imagenes en la galería.</h3>
+  </ion-text>
   <ion-slides pager="true" [options]="slideOpts" *ngIf="galleryisNull()">
     <ion-slide *ngFor="let image of listImages">
       <ion-img src="{{image.code}}"></ion-img>

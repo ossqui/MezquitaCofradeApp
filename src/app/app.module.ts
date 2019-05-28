@@ -1,3 +1,4 @@
+import { CarvedComponent } from './components/carved/carved.component';
 import { TempleComponent } from './components/temple/temple.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -19,8 +20,8 @@ import { Camera } from '@ionic-native/camera/ngx';
 
 
 @NgModule({
-  declarations: [AppComponent, TempleComponent],
-  entryComponents: [TempleComponent],
+  declarations: [AppComponent, TempleComponent, CarvedComponent],
+  entryComponents: [TempleComponent, CarvedComponent],
   imports: [BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,

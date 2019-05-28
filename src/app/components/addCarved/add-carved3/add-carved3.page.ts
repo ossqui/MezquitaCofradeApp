@@ -128,7 +128,7 @@ export class AddCarved3Page implements OnInit {
     const loading = await this.loadingController.create({
       spinner: "bubbles",
       duration: 5000,
-      message: 'Guardando templo...',
+      message: 'Guardando talla...',
     });
     return await loading.present();
   }
