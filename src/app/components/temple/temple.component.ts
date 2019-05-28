@@ -1,3 +1,4 @@
+import { ConectService } from './../../services/conect.service';
 import { CarvedComponent } from './../carved/carved.component';
 import { Carved } from './../../model/carved';
 import { DataService } from './../../services/data.service';
@@ -23,8 +24,17 @@ export class TempleComponent implements OnInit {
     private ModalController: ModalController,
     private NavParams: NavParams,
     private AuthService: AuthService,
-    private DataService: DataService
-  ) { }
+    private DataService: DataService,
+    private ConectService: ConectService
+  ) { 
+    this.ConectService.getMessage().subscribe(answell=>{
+      if(answell){
+        this.DataService.getCarvedTemple(this.temple.id).subscribe(carvedCollection => {
+          this.carvedList = carvedCollection;
+        })
+      }
+    })
+  }
 
   openCarved(carved: Carved) {
     this.ModalController.create({
