@@ -2,7 +2,7 @@ import { ConectService } from './../../services/conect.service';
 import { AuthService } from './../../services/auth.service';
 import { DataService } from './../../services/data.service';
 import { Carved } from './../../model/carved';
-import { ModalController, NavParams } from '@ionic/angular';
+import { ModalController, NavParams, AlertController, ToastController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { imageGallery } from './../../model/imageGallery';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -22,7 +22,9 @@ export class CarvedComponent implements OnInit {
     private NavParams: NavParams,
     private DataService: DataService,
     private AuthService: AuthService,
-    private ConectService: ConectService
+    private ConectService: ConectService,
+    private alertController:AlertController,
+    private toastController: ToastController
   ) { }
 
   ngOnInit() {
@@ -82,19 +84,49 @@ export class CarvedComponent implements OnInit {
   }
 
   deleteCarved(id: string) {
-    this.ModalController.dismiss()
-      .then(() => {
-        this.DataService.deleteCarved(id)
-          .then(() => {
-            console.log("Talla eliminada");
-            this.ConectService.sendMessage(true);
-          })
-          .catch(() => {
-            console.log("Talla no eliminada");
-          })
-      })
-      .catch(err => {
-        console.log("ha ocurrido un error"+err);
-      })
+    this.presentAlertConfirm(id);
+  }
+
+  async presentAlertConfirm(id: string) {
+    const alert = await this.alertController.create({
+      header: 'Eliminar talla',
+      message: '¿Estas seguro de eliminar la talla?. Se eliminarán todos los datos y su galería.',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            this.presentToast("No se eliminó la talla");
+          }
+        }, {
+          text: 'Aceptar',
+          handler: () => {
+            this.ModalController.dismiss()
+              .then(() => {
+                this.DataService.deleteTemple(id)
+                  .then(() => {
+                    this.presentToast("Se elimino la talla");
+                  })
+                  .catch(() => {
+                    this.presentToast("No se eliminó la talla");
+                  })
+              })
+              .catch(err => {
+                console.log("ha ocurrido un error" + err);
+              })
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async presentToast(text: string) {
+    const toast = await this.toastController.create({
+      message: text,
+      duration: 2000
+    });
+    toast.present();
   }
 }
