@@ -11,6 +11,6 @@
   <ion-label text-center color="dark">Contraseña</ion-label>
   <ion-input text-center type="password" name="password" [(ngModel)]="password"></ion-input>
   <ion-button expand="full" color="secondary" (click)="login()">Acceder</ion-button>
-  <ion-label text-center >¿has olvidado tu clave?</ion-label>
+  <ion-label text-center (click)="openTemple()" >¿has olvidado tu clave?</ion-label>
   <ion-label text-center class="marginTop10" routerLink="/sign-up">Registrate</ion-label>
 </ion-content>

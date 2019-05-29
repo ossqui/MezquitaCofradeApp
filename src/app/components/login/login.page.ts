@@ -1,7 +1,9 @@
+import { ModalController } from '@ionic/angular';
 import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
+import { RecoverPasswordComponent } from '../recover-password/recover-password.component';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,8 @@ export class LoginPage implements OnInit {
 
   constructor(
     private AuthService: AuthService,
-    private router: Router
+    private router: Router,
+    private ModalController: ModalController
   ) { }
 
   ngOnInit() {
@@ -29,6 +32,13 @@ export class LoginPage implements OnInit {
       .catch((error) => {
         alert('Los datos de inicio de sesión son incorrectos');
       });
+  }
+
+  openTemple() {
+    this.ModalController.create({
+      component: RecoverPasswordComponent
+    }).then((modal) => modal.present())
+      .catch(() => { })
   }
 
 }

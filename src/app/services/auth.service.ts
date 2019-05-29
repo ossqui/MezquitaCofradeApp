@@ -32,7 +32,6 @@ export class AuthService {
     } else {
       return this.AngularFireAuth.auth.sendPasswordResetEmail(email);
     }
-
   }
 
   /**
@@ -66,7 +65,11 @@ export class AuthService {
 
   loginState() {
     if (isNullOrUndefined(this.logged)) {
-      this.dateUser();
+      this.dateUser()
+        .then(() => {
+        })
+        .catch(() => {
+        })
     }
     return this.logged;
   }

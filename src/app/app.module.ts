@@ -18,11 +18,12 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule, FirestoreSettingsToken } from "@angular/fire/firestore";
 import { Camera } from '@ionic-native/camera/ngx';
 import { UserComponent } from './components/user/user.component';
+import { RecoverPasswordComponent } from './components/recover-password/recover-password.component';
 
 
 @NgModule({
-  declarations: [AppComponent, TempleComponent, CarvedComponent, UserComponent],
-  entryComponents: [TempleComponent, CarvedComponent, UserComponent],
+  declarations: [AppComponent, TempleComponent, CarvedComponent, UserComponent, RecoverPasswordComponent],
+  entryComponents: [TempleComponent, CarvedComponent, UserComponent, RecoverPasswordComponent],
   imports: [BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
