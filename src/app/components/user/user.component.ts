@@ -61,4 +61,13 @@ export class UserComponent implements OnInit {
     toast.present();
   }
 
+  resetPassword(){
+    this.AuthService.resetPassword().then(()=>{
+      this.presentToast("Se ha enviado un correo para el cambio de contraseña");
+    }).catch(err => {
+      this.presentToast("No se ha podido cambiar la clave");
+      console.log(err);
+      
+    })
+  }
 }
