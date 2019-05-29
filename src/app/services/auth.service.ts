@@ -14,10 +14,10 @@ export class AuthService {
 
   private logged: boolean = null;
   private user: user = {
-    uid:"",
-    name:"",
-    permisions:"",
-    email:""
+    uid: "",
+    name: "",
+    permisions: "",
+    email: ""
   }
 
   constructor(
@@ -25,6 +25,15 @@ export class AuthService {
     private Router: Router,
     private AngularFirestore: AngularFirestore
   ) { }
+
+  resetPassword(email?: string) {
+    if (isNullOrUndefined(email)) {
+      return this.AngularFireAuth.auth.sendPasswordResetEmail(this.user.email);
+    } else {
+      return this.AngularFireAuth.auth.sendPasswordResetEmail(email);
+    }
+
+  }
 
   /**
    * inicia sesión con las credenciales del usuario pasado por parametro.
@@ -66,10 +75,12 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       this.AngularFireAuth.auth.createUserWithEmailAndPassword(user, password).then(res => {
         const uid = res.user.uid;
+        const email = res.user.email
         this.AngularFirestore.collection('user').doc(uid).set({
           name: name,
           uid: uid,
           permisions: permisions,
+          email: email
         })
 
         this.Router.navigate(['/login']);
@@ -78,33 +89,45 @@ export class AuthService {
     })
   }
 
-  returnUser(){
+  returnUser(): user {
     return this.user;
   }
 
-  returnPermisions(){
+  returnPermisions() {
     return this.user.permisions;
   }
 
-  returnName(){
-    return this.user.name;
+  returnName() {
+    return new Promise<string>((resolve, reject) => {
+      if (isNullOrUndefined(this.user.name)) {
+        return reject(null);
+      } else {
+        return resolve(this.user.name);
+      }
+    })
   }
 
   dateUser() {
-    this.AngularFireAuth.user.subscribe(user => {
-      if (!isNullOrUndefined(user)) {
-        this.AngularFirestore.collection('user').doc(user.uid).get().subscribe((d) => {
-          this.user = {
-            uid: user.uid,
-            name: d.data().name,
-            permisions: d.data().permisions,
-            email: user.email
-          }
-        })
-        this.logged = true;
-      } else {
-        this.logged = false;
-      }
+    return new Promise((resolve, reject) => {
+      this.AngularFireAuth.user.subscribe(user => {
+        if (!isNullOrUndefined(user)) {
+          this.AngularFirestore.collection('user').doc(user.uid).get().subscribe((d) => {
+            this.user = {
+              uid: user.uid,
+              name: d.data().name,
+              permisions: d.data().permisions,
+              email: user.email
+            }
+          })
+          this.logged = true;
+          return resolve(true);
+
+        } else {
+          this.logged = false;
+          return reject(false);
+        }
+      })
     })
+
   }
 }

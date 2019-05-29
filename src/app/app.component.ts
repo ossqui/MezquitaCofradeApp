@@ -1,4 +1,5 @@
-import { Platform, ToastController } from '@ionic/angular';
+import { UserComponent } from './components/user/user.component';
+import { Platform, ToastController, ModalController } from '@ionic/angular';
 import { AuthService } from './services/auth.service';
 import { Component } from '@angular/core';
 import { MenuController } from '@ionic/angular';
@@ -24,7 +25,8 @@ export class AppComponent {
     private menu: MenuController,
     private AuthService: AuthService,
     private Router: Router,
-    public toastController: ToastController
+    private toastController: ToastController,
+    private ModalController: ModalController
   ) {
     this.initializeApp();
   }
@@ -37,7 +39,7 @@ export class AppComponent {
 
   async presentToast(name: string) {
     const toast = await this.toastController.create({
-      message: 'Sesion iniciada con '+name,
+      message: 'Sesion iniciada con ' + name,
       duration: 2000
     });
     toast.present();
@@ -53,9 +55,17 @@ export class AppComponent {
     });
   }
 
-  goToAddCarved(){
+  goToAddCarved() {
     this.menu.close('custom').then(() => {
       this.Router.navigate(['/add-carved1']);
+    });
+  }
+
+  openUserDate() {
+    this.menu.close().then(() => {
+      this.ModalController.create({
+        component: UserComponent
+      }).then((modal) => modal.present());
     });
   }
 
@@ -65,18 +75,18 @@ export class AppComponent {
     })
   }
 
-  permisionsEditUser(){
-    if((this.AuthService.returnPermisions()=="2") || (this.AuthService.returnPermisions()=="3")){
+  permisionsEditUser() {
+    if ((this.AuthService.returnPermisions() == "2") || (this.AuthService.returnPermisions() == "3")) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
 
-  permisionsAdminUser(){
-    if((this.AuthService.returnPermisions()=="3")){
+  permisionsAdminUser() {
+    if ((this.AuthService.returnPermisions() == "3")) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }

@@ -1,7 +1,7 @@
 import { Temple } from './../model/temple';
 import { DataService } from './../services/data.service';
 import { Component, OnInit } from '@angular/core';
-import { MenuController, ModalController, LoadingController } from '@ionic/angular';
+import { MenuController, ModalController, LoadingController, ToastController } from '@ionic/angular';
 import { TempleComponent } from '../components/temple/temple.component';
 import { AuthService } from './../services/auth.service';
 
@@ -12,13 +12,15 @@ import { AuthService } from './../services/auth.service';
 })
 export class HomePage implements OnInit {
   public temples: any = [];
+  private username: string;
 
   constructor(
     private menu: MenuController,
     private DataService: DataService,
     private ModalController: ModalController,
     private loadingController: LoadingController,
-    private AuthService: AuthService
+    private AuthService: AuthService,
+    private toastController: ToastController
   ) { }
 
   ngOnInit() {
@@ -32,14 +34,14 @@ export class HomePage implements OnInit {
     this.AuthService.dateUser();
   }
 
-  openTemple(temple:Temple){
+  openTemple(temple: Temple) {
     this.ModalController.create({
       component: TempleComponent,
-      componentProps : {
+      componentProps: {
         temple: temple
       }
     }).then((modal) => modal.present())
-    .catch(()=>{})
+      .catch(() => { })
   }
 
   async presentLoadingWithOptions() {
@@ -49,5 +51,13 @@ export class HomePage implements OnInit {
       message: 'Cargando templos',
     });
     return await loading.present();
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: "Sesión iniciada con " + this.username,
+      duration: 2000
+    });
+    toast.present();
   }
 }
