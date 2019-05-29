@@ -1,3 +1,5 @@
+import { AngularFireAuth } from '@angular/fire/auth';
+import { user } from './../model/user';
 import { Carved } from './../model/carved';
 
 import { imageGallery } from './../model/imageGallery';
@@ -19,6 +21,10 @@ export class DataService {
   constructor(
     private AngularFirestore: AngularFirestore
   ) {
+  }
+
+  setDataUser(user: user){
+    return this.AngularFirestore.collection(environment.firebaseConfig.user).doc(user.uid).set(user);
   }
 
   getTemples() {

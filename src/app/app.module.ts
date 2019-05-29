@@ -17,11 +17,12 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule, FirestoreSettingsToken } from "@angular/fire/firestore";
 import { Camera } from '@ionic-native/camera/ngx';
+import { UserComponent } from './components/user/user.component';
 
 
 @NgModule({
-  declarations: [AppComponent, TempleComponent, CarvedComponent],
-  entryComponents: [TempleComponent, CarvedComponent],
+  declarations: [AppComponent, TempleComponent, CarvedComponent, UserComponent],
+  entryComponents: [TempleComponent, CarvedComponent, UserComponent],
   imports: [BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
