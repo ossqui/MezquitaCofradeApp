@@ -27,6 +27,17 @@ export class DataService {
     return this.AngularFirestore.collection(environment.firebaseConfig.user).doc(user.uid).set(user);
   }
 
+  getUsers() {
+    return this.AngularFirestore.collection(environment.firebaseConfig.user).snapshotChanges()
+      .pipe(map(rooms => {
+        return rooms.map(a => {
+          const data = a.payload.doc.data() as user;
+          data.uid = a.payload.doc.id;
+          return data;
+        })
+      }))
+  }
+
   getTemples() {
     return this.AngularFirestore.collection(environment.firebaseConfig.templeCollection).snapshotChanges()
       .pipe(map(rooms => {
