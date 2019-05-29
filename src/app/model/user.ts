@@ -3,4 +3,5 @@ export interface user {
     name:string,
     permisions:string,
     email:string,
+    isChecked?:boolean;
 }

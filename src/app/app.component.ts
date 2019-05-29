@@ -60,6 +60,11 @@ export class AppComponent {
       this.Router.navigate(['/add-carved1']);
     });
   }
+  goToAdminUsers() {
+    this.menu.close('custom').then(() => {
+      this.Router.navigate(['admin-users']);
+    });
+  }
 
   openUserDate() {
     this.menu.close().then(() => {

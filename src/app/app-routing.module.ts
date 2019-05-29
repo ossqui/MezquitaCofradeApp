@@ -15,7 +15,8 @@ const routes: Routes = [
   { path: 'add-temple3', loadChildren: './components/addTemple/add-temple3/add-temple3.module#AddTemple3PageModule', canActivate: [AuthGuard, ContentEditorGuard] },
   { path: 'add-carved1', loadChildren: './components/addCarved/add-carved1/add-carved1.module#AddCarved1PageModule', canActivate: [AuthGuard, ContentEditorGuard] },
   { path: 'add-carved2', loadChildren: './components/addCarved/add-carved2/add-carved2.module#AddCarved2PageModule', canActivate: [AuthGuard, ContentEditorGuard] },
-  { path: 'add-carved3', loadChildren: './components/addCarved/add-carved3/add-carved3.module#AddCarved3PageModule', canActivate: [AuthGuard, ContentEditorGuard] },
+  { path: 'add-carved3', loadChildren: './components/addCarved/add-carved3/add-carved3.module#AddCarved3PageModule', canActivate: [AuthGuard, ContentEditorGuard] },  { path: 'admin-users', loadChildren: './components/admin-users/admin-users.module#AdminUsersPageModule' },
+
 
 
 
