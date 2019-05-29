@@ -37,6 +37,14 @@ export class TempleComponent implements OnInit {
       }
     })
   }
+  
+  carvedsNull(){
+    if(this.carvedList.length == 0){
+      return true;
+    }else{
+      return false;
+    }
+  }
 
   openCarved(carved: Carved) {
     this.ModalController.create({
