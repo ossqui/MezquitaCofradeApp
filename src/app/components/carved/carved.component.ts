@@ -2,7 +2,7 @@ import { ConectService } from './../../services/conect.service';
 import { AuthService } from './../../services/auth.service';
 import { DataService } from './../../services/data.service';
 import { Carved } from './../../model/carved';
-import { ModalController, NavParams, AlertController, ToastController } from '@ionic/angular';
+import { ModalController, NavParams, AlertController, ToastController, ActionSheetController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { imageGallery } from './../../model/imageGallery';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -24,7 +24,8 @@ export class CarvedComponent implements OnInit {
     private AuthService: AuthService,
     private ConectService: ConectService,
     private alertController:AlertController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private actionSheetController: ActionSheetController
   ) { }
 
   ngOnInit() {
@@ -39,6 +40,33 @@ export class CarvedComponent implements OnInit {
     this.ModalController.dismiss();
   }
 
+  gallery() {
+    var image: imageGallery;
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      targetWidth: 200,
+      saveToPhotoAlbum: false
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+      image = {
+        idFather: this.carved.id,
+        code: 'data:image/jpeg;base64,' + imageData
+      }
+      this.DataService.addImageGallery(image);
+      this.DataService.getImages(this.carved.id).then(imagesGallery =>{
+        this.listImages = imagesGallery;
+       })
+
+    }, (err) => {
+      console.log(err);
+    });
+  }
 
   photographic() {
     var image:imageGallery;
@@ -128,5 +156,35 @@ export class CarvedComponent implements OnInit {
       duration: 2000
     });
     toast.present();
+  }
+
+  openCapture() {
+    this.presentActionSheet();
+  }
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Añadir imagen',
+      buttons: [{
+        text: 'Camara',
+        icon: 'camera',
+        handler: () => {
+          this.photographic();
+        }
+      }, {
+        text: 'Galería',
+        icon: 'folder',
+        handler: () => {
+          this.gallery();
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
   }
 }

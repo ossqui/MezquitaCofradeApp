@@ -3,7 +3,7 @@ import { CarvedComponent } from './../carved/carved.component';
 import { Carved } from './../../model/carved';
 import { DataService } from './../../services/data.service';
 import { AuthService } from './../../services/auth.service';
-import { ModalController, NavParams, AlertController, ToastController } from '@ionic/angular';
+import { ModalController, NavParams, AlertController, ToastController, ActionSheetController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { Temple } from 'src/app/model/temple';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -27,7 +27,8 @@ export class TempleComponent implements OnInit {
     private DataService: DataService,
     private ConectService: ConectService,
     private alertController: AlertController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private actionSheetController: ActionSheetController
   ) {
     this.ConectService.getMessage().subscribe(answell => {
       if (answell) {
@@ -75,6 +76,34 @@ export class TempleComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  gallery() {
+    var image: imageGallery;
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      targetWidth: 200,
+      saveToPhotoAlbum: false
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+      image = {
+        idFather: this.temple.id,
+        code: 'data:image/jpeg;base64,' + imageData
+      }
+      this.DataService.addImageGallery(image);
+      this.DataService.getImages(this.temple.id).then(imagesGallery => {
+        this.listImages = imagesGallery;
+      })
+
+    }, (err) => {
+      console.log(err);
+    });
   }
 
   photographic() {
@@ -157,5 +186,35 @@ export class TempleComponent implements OnInit {
       duration: 2000
     });
     toast.present();
+  }
+
+  openCapture() {
+    this.presentActionSheet();
+  }
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Añadir imagen',
+      buttons: [{
+        text: 'Camara',
+        icon: 'camera',
+        handler: () => {
+          this.photographic();
+        }
+      }, {
+        text: 'Galería',
+        icon: 'folder',
+        handler: () => {
+          this.gallery();
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
   }
 }
