@@ -1,5 +1,5 @@
 import { UserComponent } from './components/user/user.component';
-import { Platform, ToastController, ModalController } from '@ionic/angular';
+import { Platform, ToastController, ModalController, AlertController } from '@ionic/angular';
 import { AuthService } from './services/auth.service';
 import { Component } from '@angular/core';
 import { MenuController } from '@ionic/angular';
@@ -26,7 +26,8 @@ export class AppComponent {
     private AuthService: AuthService,
     private Router: Router,
     private toastController: ToastController,
-    private ModalController: ModalController
+    private ModalController: ModalController,
+    private alertController: AlertController
   ) {
     this.initializeApp();
   }
@@ -37,9 +38,9 @@ export class AppComponent {
     });
   }
 
-  async presentToast(name: string) {
+  async presentToast(msg: string) {
     const toast = await this.toastController.create({
-      message: 'Sesion iniciada con ' + name,
+      message: msg,
       duration: 2000
     });
     toast.present();
@@ -75,9 +76,7 @@ export class AppComponent {
   }
 
   logOut() {
-    this.menu.close('custom').then(() => {
-      this.AuthService.logOut();
-    })
+    this.presentAlertConfirm();
   }
 
   permisionsEditUser() {
@@ -94,5 +93,32 @@ export class AppComponent {
     } else {
       return false;
     }
+  }
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      header: 'Cerrar sesión',
+      message: '¿Estas seguro de cerrar sesión?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            this.presentToast("No se cerro la sesión");
+            return false;
+          }
+        }, {
+          text: 'Aceptar',
+          handler: () => {
+            this.menu.close('custom').then(() => {
+              this.AuthService.logOut();
+              this.presentToast("Se cerro la sesión");
+            })
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 }

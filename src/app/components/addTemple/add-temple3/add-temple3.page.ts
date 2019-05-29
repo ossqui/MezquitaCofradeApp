@@ -3,7 +3,7 @@ import { TempleService } from './../../../services/temple.service';
 import { Component, OnInit } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { isNullOrUndefined } from 'util';
-import { AlertController, LoadingController, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController, ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({
@@ -22,7 +22,8 @@ export class AddTemple3Page implements OnInit {
     private Router: Router,
     private loadingController: LoadingController,
     private alertController: AlertController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private actionSheetController: ActionSheetController
   ) { }
 
   ngOnInit() {
@@ -137,5 +138,35 @@ export class AddTemple3Page implements OnInit {
       duration: 2000
     });
     toast.present();
+  }
+
+  openCapture() {
+    this.presentActionSheet();
+  }
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Añadir imagen',
+      buttons: [{
+        text: 'Camara',
+        icon: 'camera',
+        handler: () => {
+          this.photographic();
+        }
+      }, {
+        text: 'Galería',
+        icon: 'folder',
+        handler: () => {
+          this.gallery();
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
   }
 }

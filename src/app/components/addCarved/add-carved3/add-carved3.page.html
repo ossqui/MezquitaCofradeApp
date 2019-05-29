@@ -8,8 +8,7 @@
   </ion-header>
 
 <ion-content>
-    <ion-button color="dark" expand="full" type="button" (click)="photographic()">Cámara</ion-button>
-    <ion-button color="dark" expand="full" type="button" (click)="gallery()">Galería</ion-button>
+    <ion-button color="dark" expand="full" type="button" (click)="openCapture()">Añadir imagen</ion-button>
     <ion-img src="{{image}}" *ngIf="image!=null"></ion-img>
     <ion-button color="dark" expand="full" type="button" [disabled]="disableButton()" (click)="saveCarved()">Guardar</ion-button>
 

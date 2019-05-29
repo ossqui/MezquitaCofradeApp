@@ -1,6 +1,6 @@
 import { isNullOrUndefined } from 'util';
 import { DataService } from './../../../services/data.service';
-import { AlertController, LoadingController, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController, ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { CarvedService } from './../../../services/carved.service';
 import { Component, OnInit } from '@angular/core';
@@ -21,7 +21,8 @@ export class AddCarved3Page implements OnInit {
     private alertController: AlertController,
     private DataService: DataService,
     private loadingController: LoadingController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private actionSheetController: ActionSheetController
   ) { }
 
   ngOnInit() {
@@ -150,5 +151,35 @@ export class AddCarved3Page implements OnInit {
       duration: 2000
     });
     toast.present();
+  }
+
+  openCapture() {
+    this.presentActionSheet();
+  }
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Añadir imagen',
+      buttons: [{
+        text: 'Camara',
+        icon: 'camera',
+        handler: () => {
+          this.photographic();
+        }
+      }, {
+        text: 'Galería',
+        icon: 'folder',
+        handler: () => {
+          this.gallery();
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
   }
 }
