@@ -5,6 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Camera } from '@ionic-native/camera/ngx';
 
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { setTranslateLoader } from 'src/app/app.module';
+import { HttpClient } from '@angular/common/http';
+
 import { HomePage } from './home.page';
 
 @NgModule({
@@ -17,7 +21,13 @@ import { HomePage } from './home.page';
         path: '',
         component: HomePage
       }
-    ])
+    ]),
+    TranslateModule.forChild({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (setTranslateLoader), deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     Camera

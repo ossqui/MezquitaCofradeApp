@@ -1,9 +1,12 @@
+import { ConectService } from './../services/conect.service';
 import { Temple } from './../model/temple';
 import { DataService } from './../services/data.service';
 import { Component, OnInit } from '@angular/core';
 import { MenuController, ModalController, LoadingController, ToastController } from '@ionic/angular';
 import { TempleComponent } from '../components/temple/temple.component';
 import { AuthService } from './../services/auth.service';
+import { TranslateService } from '@ngx-translate/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -15,13 +18,19 @@ export class HomePage implements OnInit {
   private username: string;
 
   constructor(
-    private menu: MenuController,
     private DataService: DataService,
     private ModalController: ModalController,
     private loadingController: LoadingController,
     private AuthService: AuthService,
-    private toastController: ToastController
-  ) { }
+    private translate: TranslateService,
+    private ConectService: ConectService
+  ) {
+    this.translate.addLangs(environment.currentLanguages);
+    this.translate.use(this.AuthService.getLang());
+    this.ConectService.getMessage2().subscribe(() => {
+      this.translate.use(this.AuthService.getLang());
+    })
+  }
 
   ngOnInit() {
     this.presentLoadingWithOptions();
@@ -53,11 +62,4 @@ export class HomePage implements OnInit {
     return await loading.present();
   }
 
-  async presentToast() {
-    const toast = await this.toastController.create({
-      message: "Sesión iniciada con " + this.username,
-      duration: 2000
-    });
-    toast.present();
-  }
 }
