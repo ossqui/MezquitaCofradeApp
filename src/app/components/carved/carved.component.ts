@@ -6,6 +6,7 @@ import { ModalController, NavParams, AlertController, ToastController, ActionShe
 import { Component, OnInit } from '@angular/core';
 import { imageGallery } from './../../model/imageGallery';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-carved',
@@ -22,8 +23,9 @@ export class CarvedComponent implements OnInit {
     private NavParams: NavParams,
     private DataService: DataService,
     private AuthService: AuthService,
+    private translate: TranslateService,
     private ConectService: ConectService,
-    private alertController:AlertController,
+    private alertController: AlertController,
     private toastController: ToastController,
     private actionSheetController: ActionSheetController
   ) { }
@@ -31,9 +33,9 @@ export class CarvedComponent implements OnInit {
   ngOnInit() {
     this.carved = this.NavParams.get('carved');
     this.DataService.getImages(this.carved.id)
-    .then(images => {
-      this.listImages = images;
-    })
+      .then(images => {
+        this.listImages = images;
+      })
   }
 
   closeModal() {
@@ -59,9 +61,9 @@ export class CarvedComponent implements OnInit {
         code: 'data:image/jpeg;base64,' + imageData
       }
       this.DataService.addImageGallery(image);
-      this.DataService.getImages(this.carved.id).then(imagesGallery =>{
+      this.DataService.getImages(this.carved.id).then(imagesGallery => {
         this.listImages = imagesGallery;
-       })
+      })
 
     }, (err) => {
       console.log(err);
@@ -69,7 +71,7 @@ export class CarvedComponent implements OnInit {
   }
 
   photographic() {
-    var image:imageGallery;
+    var image: imageGallery;
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -86,19 +88,19 @@ export class CarvedComponent implements OnInit {
         code: 'data:image/jpeg;base64,' + imageData
       }
       this.DataService.addImageGallery(image);
-      this.DataService.getImages(this.carved.id).then(imagesGallery =>{
+      this.DataService.getImages(this.carved.id).then(imagesGallery => {
         this.listImages = imagesGallery;
-       })
+      })
 
     }, (err) => {
       console.log(err);
     });
   }
 
-  galleryisNull(){
-    if(this.listImages.length>0){
+  galleryisNull() {
+    if (this.listImages.length > 0) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
@@ -117,31 +119,31 @@ export class CarvedComponent implements OnInit {
 
   async presentAlertConfirm(id: string) {
     const alert = await this.alertController.create({
-      header: 'Eliminar talla',
-      message: '¿Estas seguro de eliminar la talla?. Se eliminarán todos los datos y su galería.',
+      header: this.translate.instant('deleteCarved'),
+      message: this.translate.instant('msgDeleteCarved'),
       buttons: [
         {
-          text: 'Cancelar',
+          text: this.translate.instant('cancel'),
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            this.presentToast("No se eliminó la talla");
+            this.presentToast(this.translate.instant('CarvedDeleteFalse'));
           }
         }, {
-          text: 'Aceptar',
+          text: this.translate.instant('ok'),
           handler: () => {
             this.ModalController.dismiss()
               .then(() => {
                 this.DataService.deleteTemple(id)
                   .then(() => {
-                    this.presentToast("Se elimino la talla");
+                    this.presentToast(this.translate.instant('CarvedDeleteTrue'));
                   })
                   .catch(() => {
-                    this.presentToast("No se eliminó la talla");
+                    this.presentToast(this.translate.instant('CarvedDeleteFalse'));
                   })
               })
               .catch(err => {
-                console.log("ha ocurrido un error" + err);
+                this.presentToast(this.translate.instant('CarvedDeleteFalse'));
               })
           }
         }
@@ -163,21 +165,21 @@ export class CarvedComponent implements OnInit {
   }
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
-      header: 'Añadir imagen',
+      header: this.translate.instant('addImage'),
       buttons: [{
-        text: 'Camara',
+        text: this.translate.instant('camera'),
         icon: 'camera',
         handler: () => {
           this.photographic();
         }
       }, {
-        text: 'Galería',
+        text: this.translate.instant('gallery'),
         icon: 'folder',
         handler: () => {
           this.gallery();
         }
       }, {
-        text: 'Cancel',
+        text: this.translate.instant('cancel'),
         icon: 'close',
         role: 'cancel',
         handler: () => {

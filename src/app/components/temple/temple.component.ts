@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 import { Temple } from 'src/app/model/temple';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { imageGallery } from 'src/app/model/imageGallery';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-temple',
@@ -28,6 +29,7 @@ export class TempleComponent implements OnInit {
     private ConectService: ConectService,
     private alertController: AlertController,
     private toastController: ToastController,
+    private translate: TranslateService,
     private actionSheetController: ActionSheetController
   ) {
     this.ConectService.getMessage().subscribe(answell => {
@@ -147,18 +149,18 @@ export class TempleComponent implements OnInit {
 
   async presentAlertConfirm(id: string) {
     const alert = await this.alertController.create({
-      header: 'Eliminar templo',
-      message: '¿Estas seguro de eliminar el templo?. Se eliminarán todos los datos incluidas sus tallas y galerías.',
+      header: this.translate.instant('deleteTemple'),
+      message: this.translate.instant('msgDeleteTemple'),
       buttons: [
         {
-          text: 'Cancelar',
+          text: this.translate.instant('cancel'),
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
             this.presentToast("No se eliminó el templo");
           }
         }, {
-          text: 'Aceptar',
+          text: this.translate.instant('ok'),
           handler: () => {
             this.ModalController.dismiss()
               .then(() => {

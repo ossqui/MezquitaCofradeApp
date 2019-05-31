@@ -22,5 +22,19 @@
     "haveUser": "Ya tengo usuario",
     "msgCloseSession": "¿Estas seguro de que quieres cerrar sesión?",
     "closeSessionFalse": "No se cerro la sesión",
-    "closeSessonTrue": "Se cerro la sesión"
+    "closeSessonTrue": "Se cerro la sesión",
+    "deleteTemple": "Eliminar templo",
+    "deleteCarved": "Eliminar talla",
+    "carveFromTemple": "Tallas del templo",
+    "msgNoCarvedofTemple": "No existen tallas registradas en el templo",
+    "imageGallery": "Galería de imágenes",
+    "msgNoImages": "No existen imagenes en la galería",
+    "addImage": "Añadir imagen",
+    "camera": "Cámara",
+    "gallery": "Galería",
+    "msgDeleteTemple": "¿Estas seguro de eliminar el templo? Todos los datos incluidas las tallas registradas y galerías serán eliminadas",
+    "msgDeleteCarved": "¿Estas seguro de eliminar la talla? Todos los datos y la galería serán eliminados",
+    "CarvedDeleteFalse": "La talla no fue eliminada",
+    "CarvedDeleteTrue": "La talla fue eliminada"
+
 }

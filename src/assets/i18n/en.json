@@ -22,5 +22,19 @@
     "haveUser": "I already have a user",
     "msgCloseSession": "Are you sure to log out?",
     "closeSessionFalse": "Session was not closed",
-    "closeSecsonTrue": "Session closed"
+    "closeSecsonTrue": "Session closed",
+    "deleteTemple": "Delete temple",
+    "deleteCarved": "Delete carved",
+    "carveFromTemple": "Carved from temple",
+    "msgNoCarvedofTemple": "There are no carvings registered in the temple",
+    "imageGallery": "image Gallery",
+    "msgNoImages": "There are no images in the gallery",
+    "addImage": "Add image",
+    "camera": "Camera",
+    "gallery": "Gallery",
+    "msgDeleteTemple": "Are you sure to eliminate the temple? All data is deleted, including its carvings and galleries",
+    "msgDeleteCarved": "Are you sure you want to remove the size? All the data and the gallery will be deleted",
+    "CarvedDeleteFalse": "Carveding was not removed",
+    "CarvedDeleteTrue": "Carveding was removed"
+
 }
