@@ -1,8 +1,12 @@
+import { AuthService } from './../../../services/auth.service';
+import { ConectService } from './../../../services/conect.service';
 import { CarvedService } from './../../../services/carved.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-carved1',
@@ -29,7 +33,10 @@ export class AddCarved1Page implements OnInit {
     private Router: Router,
     private formBuilder: FormBuilder,
     private alertController: AlertController,
-    private CarvedService: CarvedService
+    private CarvedService: CarvedService,
+    private translate: TranslateService,
+    private AuthService: AuthService,
+    private ConectService: ConectService
   ) {
     this.formCarved = this.formBuilder.group({
       name: ['', Validators.required],
@@ -38,6 +45,11 @@ export class AddCarved1Page implements OnInit {
       style: ['', Validators.required],
       material: ['', Validators.required],
     });
+    this.translate.addLangs(environment.currentLanguages);
+    this.translate.use(this.AuthService.getLang());
+    this.ConectService.getMessage2().subscribe(() => {
+      this.translate.use(this.AuthService.getLang());
+    })
   }
 
   ngOnInit() {
@@ -114,7 +126,7 @@ export class AddCarved1Page implements OnInit {
       })
       .catch(() => {
 
-        this.presentAlert("Importante", "No se puede rellenar campos unicamente con espacios o mas caracteres de lo permitido", "Aceptar");
+        this.presentAlert(this.translate.instant('important'), this.translate.instant('msgEmpty'), this.translate.instant('ok'));
 
       })
   }

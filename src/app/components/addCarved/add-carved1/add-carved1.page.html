@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Añadir talla</ion-title>
+    <ion-title>{{ 'addCarved' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -8,7 +8,7 @@
   <form [formGroup]="formCarved" (ngSubmit)="savePart1()">
     <ion-card>
       <ion-card-header no-padding>
-        <ion-card-title text-center margin-top>Nombre</ion-card-title>
+        <ion-card-title text-center margin-top>{{ 'name' | translate}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-input minlength="1" maxlength="60" formControlName="name" type="text" (ionChange)="sizeInputs()">
@@ -18,7 +18,7 @@
     </ion-card>
     <ion-card>
       <ion-card-header no-padding>
-        <ion-card-title text-center margin-top>Autor</ion-card-title>
+        <ion-card-title text-center margin-top>{{ 'author' | translate}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-input minlength="1" maxlength="60" formControlName="author" type="text" (ionChange)="sizeInputs()">
@@ -28,7 +28,7 @@
     </ion-card>
     <ion-card>
       <ion-card-header no-padding>
-        <ion-card-title text-center margin-top>Año de hechura</ion-card-title>
+        <ion-card-title text-center margin-top>{{ 'yearCarving' | translate}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-input minlength="1" maxlength="60" formControlName="ageOfCarved" type="text" (ionChange)="sizeInputs()">
@@ -38,7 +38,7 @@
     </ion-card>
     <ion-card>
       <ion-card-header no-padding>
-        <ion-card-title text-center margin-top>Estilo</ion-card-title>
+        <ion-card-title text-center margin-top>{{ 'style' | translate}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-input minlength="1" maxlength="60" formControlName="style" type="text" (ionChange)="sizeInputs()">
@@ -56,7 +56,7 @@
         <span>{{countMaterial}}</span>
       </ion-card-content>
     </ion-card>
-    <ion-button color="dark" expand="full" type="submit" [disabled]="!formCarved.valid">Siguiente</ion-button>
-    <ion-button color="dark" expand="full" type="button" (click)="cancel()">Cancelar</ion-button>
+    <ion-button color="dark" expand="full" type="submit" [disabled]="!formCarved.valid">{{'next' | translate}}</ion-button>
+    <ion-button color="dark" expand="full" type="button" (click)="cancel()">{{'cancel' | translate}}</ion-button>
   </form>
 </ion-content>

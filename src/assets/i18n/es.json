@@ -57,10 +57,20 @@
     "oa": "Apertura tardes",
     "ca": "Cierre tardes",
     "templeDescription": "Descripcion del templo",
-    "addTemplefalse" : "Templo no añadido",
+    "addTemplefalse": "Templo no añadido",
     "imageMandatory": "La imagen principal es obligatoria",
     "savingTemple": "Guardando templo",
     "addTempleMsg": "¿Estas seguro de añadir el templo?",
-    "addTempleTrue": "Templo añadido"
-
+    "addTempleTrue": "Templo añadido",
+    "author": "Autor",
+    "yearCarving": "Año de hechura",
+    "style": "Estilo",
+    "brotherhoot": "Hermandad",
+    "dayProcession": "Día de salida",
+    "templeLocated": "Templo donde se ubica",
+    "carvedDescription": "Descripción del templo",
+    "selectTemple": "Selecciona un templo",
+    "addCarvedMsg": "¿Estas seguro de añadir la talla?",
+    "savingCarved": "Guardando talla...",
+    "loadingTemples": "Cargando templos"
 }

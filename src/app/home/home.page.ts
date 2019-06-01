@@ -57,7 +57,7 @@ export class HomePage implements OnInit {
     const loading = await this.loadingController.create({
       spinner: "bubbles",
       duration: 5000,
-      message: 'Cargando templos',
+      message: this.translate.instant('loadingTemples'),
     });
     return await loading.present();
   }

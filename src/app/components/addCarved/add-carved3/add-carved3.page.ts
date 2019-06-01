@@ -1,3 +1,5 @@
+import { AuthService } from './../../../services/auth.service';
+import { ConectService } from './../../../services/conect.service';
 import { isNullOrUndefined } from 'util';
 import { DataService } from './../../../services/data.service';
 import { AlertController, LoadingController, ToastController, ActionSheetController } from '@ionic/angular';
@@ -5,6 +7,8 @@ import { Router } from '@angular/router';
 import { CarvedService } from './../../../services/carved.service';
 import { Component, OnInit } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { environment } from 'src/environments/environment';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-carved3',
@@ -22,8 +26,17 @@ export class AddCarved3Page implements OnInit {
     private DataService: DataService,
     private loadingController: LoadingController,
     private toastController: ToastController,
-    private actionSheetController: ActionSheetController
-  ) { }
+    private actionSheetController: ActionSheetController,
+    private translate: TranslateService,
+    private AuthService: AuthService,
+    private ConectService: ConectService
+  ) {
+    this.translate.addLangs(environment.currentLanguages);
+    this.translate.use(this.AuthService.getLang());
+    this.ConectService.getMessage2().subscribe(() => {
+      this.translate.use(this.AuthService.getLang());
+    })
+  }
 
   ngOnInit() {
   }
@@ -70,8 +83,8 @@ export class AddCarved3Page implements OnInit {
   saveCarved() {
     if (!isNullOrUndefined(this.image)) {
       this.presentAlertConfirm()
-    }else{
-      this.presentAlertSimple("Talla no añadida", "La imagen principal es obligatoria", "Aceptar");
+    } else {
+      this.presentAlertSimple(this.translate.instant('important'), this.translate.instant('imageMandatory'), this.translate.instant('ok'));
     }
   }
 
@@ -106,36 +119,36 @@ export class AddCarved3Page implements OnInit {
     const loading = await this.loadingController.create({
       spinner: "bubbles",
       duration: 5000,
-      message: 'Guardando talla...',
+      message: this.translate.instant('savingCarved'),
     });
     return await loading.present();
   }
 
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
-      header: 'Añadir templo',
-      message: '¿Estas seguro de añadir el templo?',
+      header: this.translate.instant('addCarved'),
+      message: this.translate.instant('addCarvedMsg'),
       buttons: [
         {
-          text: 'Cancelar',
+          text: this.translate.instant('cancel'),
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            this.presentToast("No se añadió el templo");
+            this.presentToast(this.translate.instant('addCarvedFalse'));
             return false;
           }
         }, {
-          text: 'Aceptar',
+          text: this.translate.instant('ok'),
           handler: () => {
             this.presentLoadingWithOptions();
             this.CarvedService.returnCarved(this.image).then(carved => {
               this.DataService.addCarved(carved).then(() => {
                 this.loadingController.dismiss();
                 this.Router.navigate(['/home']);
-                this.presentToast("Talla añadida.")
+                this.presentToast(this.translate.instant('addCarvedTrue'))
               }).catch(() => {
                 this.loadingController.dismiss();
-                this.presentToast("Talla no añadida");
+                this.presentToast(this.translate.instant('addCarvedFalse'));
               });
             });
           }
@@ -158,21 +171,21 @@ export class AddCarved3Page implements OnInit {
   }
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
-      header: 'Añadir imagen',
+      header: this.translate.instant('addImage'),
       buttons: [{
-        text: 'Camara',
+        text: this.translate.instant('camera'),
         icon: 'camera',
         handler: () => {
           this.photographic();
         }
       }, {
-        text: 'Galería',
+        text: this.translate.instant('gallery'),
         icon: 'folder',
         handler: () => {
           this.gallery();
         }
       }, {
-        text: 'Cancel',
+        text: this.translate.instant('cancel'),
         icon: 'close',
         role: 'cancel',
         handler: () => {

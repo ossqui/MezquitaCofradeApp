@@ -61,5 +61,18 @@
     "imageMandatory": "The main image is mandatory",
     "savingTemple": "Saving temple",
     "addTempleMsg": "Are you sure to add the temple?",
-    "addTempleTrue": "Temple added"
+    "addTempleTrue": "Temple added",
+    "author": "Author",
+    "yearCarving": "Year of carving",
+    "style": "Style",
+    "brotherhoot": "Brotherhoot",
+    "dayProcession": "day of procession",
+    "templeLocated": "Temple where it is located",
+    "carvedDescription": "Carved description",
+    "selectTemple": "Select temple",
+    "addCarvedTrue": "Carved added",
+    "addCarvedFalse": "Carved not added",
+    "addCarvedMsg": "Are you sure to add the carved?",
+    "savingCarved": "Saving carved...",
+    "loadingTemples": "Loading temples"
 }
