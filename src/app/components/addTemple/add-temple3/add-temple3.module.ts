@@ -7,6 +7,9 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { IonicModule } from '@ionic/angular';
 
 import { AddTemple3Page } from './add-temple3.page';
+import { TranslateModule, TranslateLoader, TranslatePipe } from '@ngx-translate/core';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 const routes: Routes = [
   {
@@ -15,12 +18,24 @@ const routes: Routes = [
   }
 ];
 
+export function setTranslateLoader(http: any) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    TranslateModule.forRoot(),
+    HttpClientModule, TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (setTranslateLoader),
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     Camera

@@ -4,6 +4,7 @@ import { user } from './../../model/user';
 import { ModalController, ToastController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { isNullOrUndefined } from 'util';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user',
@@ -12,13 +13,14 @@ import { isNullOrUndefined } from 'util';
 })
 export class UserComponent implements OnInit {
   private user: user;
-  private edit: boolean = false;
+  private edit: boolean = true;
   private name: string;
 
   constructor(
     private ModalController: ModalController,
     private AuthService: AuthService,
     private DataService: DataService,
+    private translate: TranslateService,
     private toastController: ToastController
   ) { }
 
@@ -35,12 +37,12 @@ export class UserComponent implements OnInit {
     if (!isNullOrUndefined(this.name) && !(this.name == "")) {
       this.user.name = this.name;
       this.DataService.setDataUser(this.user).then(() => {
-        this.presentToast("Datos del usuario modificados");
+        this.presentToast(this.translate.instant('dateModify'));
       }).catch(()=>{
-        this.presentToast("Datos no modificados");
+        this.presentToast(this.translate.instant('dateNoModify'));
       })
     }else{
-      this.presentToast("No se ha introducido ningun valor");
+      this.presentToast(this.translate.instant('nameEmpty'));
     }
 
   }
@@ -63,9 +65,9 @@ export class UserComponent implements OnInit {
 
   resetPassword(){
     this.AuthService.resetPassword().then(()=>{
-      this.presentToast("Se ha enviado un correo para el cambio de contraseña");
+      this.presentToast(this.translate.instant('sendEmailPassword'));
     }).catch(err => {
-      this.presentToast("No se ha podido cambiar la clave");
+      this.presentToast(this.translate.instant('noChangePassword'));
       console.log(err);
       
     })

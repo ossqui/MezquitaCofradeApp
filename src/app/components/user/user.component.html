@@ -3,21 +3,21 @@
     <ion-button slot="start" (click)="closeModal()">
       <ion-icon name="arrow-round-back"></ion-icon>
     </ion-button>
-    <ion-title>Usuario</ion-title>
+    <ion-title>{{'user' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-card padding *ngIf="!edit">
-    <ion-card-title text-center class="bgSecondary borderRadious ">Nombre</ion-card-title>
+  <ion-card padding *ngIf="edit">
+    <ion-card-title text-center class="bgSecondary borderRadious ">{{'name' | translate}}</ion-card-title>
     <ion-card-title text-center class="marginTop10">{{user.name}}</ion-card-title>
   </ion-card>
-  <ion-button *ngIf="!edit" class="marginTop10 " expand="full" 
+  <ion-button *ngIf="edit" class="marginTop10 " expand="full" 
     color="secondary" (click)=" resetPassword()">Cambiar contraseña</ion-button>
-  <ion-button *ngIf="!edit" expand="full" color="medium" (click)="activeEdit()">Editar</ion-button>
-  <ion-card padding *ngIf="edit">
-      <ion-card-title text-center class="bgSecondary borderRadious ">Nombre</ion-card-title>
+  <ion-button *ngIf="edit" expand="full" color="medium" (click)="activeEdit()">Editar</ion-button>
+  <ion-card padding *ngIf="!edit">
+      <ion-card-title text-center class="bgSecondary borderRadious ">{{'name' | translate}}</ion-card-title>
       <ion-input text-center color="black" value="{{user.name}}" [(ngModel)]="name"></ion-input>
     </ion-card>
-    <ion-button *ngIf="edit" class="marginTop10 " expand="full" 
-    color="secondary" (click)=" activeEdit(); setData() ">Guardar</ion-button>
+    <ion-button *ngIf="!edit" class="marginTop10 " expand="full" 
+    color="secondary" (click)=" activeEdit(); setData() ">{{'save' | translate}}</ion-button>
 </ion-content>
