@@ -7,12 +7,17 @@ import { Observable } from 'rxjs';
 export class ConectService {
   myobservable;
   myobserver;
+  myobservable2;
+  myobserver2;
 
 
 
   constructor() {
     this.myobservable = new Observable((observer) => {
       this.myobserver = observer;
+    });
+    this.myobservable2 = new Observable((observer) => {
+      this.myobserver2 = observer;
     });
   }
 
@@ -24,7 +29,17 @@ export class ConectService {
   sendMessage(m: any) {
     if (this.myobservable) {
       this.myobserver.next(m);
-      //this.myobserver.complete(m);
+    }
+  }
+
+  sendMessage2(m: any) {
+    if(m==true){
+      m=false;
+    }else{
+      m=true;
+    }
+    if (this.myobservable2) {
+      this.myobserver2.next(m);
     }
   }
 
@@ -34,5 +49,9 @@ export class ConectService {
    */
   getMessage(): Observable<any> {
     return this.myobservable;
+  }
+
+  getMessage2(): Observable<any> {
+    return this.myobservable2;
   }
 }

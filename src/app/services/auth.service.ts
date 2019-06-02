@@ -11,7 +11,7 @@ import { user } from '../model/user';
   providedIn: 'root'
 })
 export class AuthService {
-
+  lang: any;
   private logged: boolean = null;
   private user: user = {
     uid: "",
@@ -32,6 +32,23 @@ export class AuthService {
     } else {
       return this.AngularFireAuth.auth.sendPasswordResetEmail(email);
     }
+  }
+
+  /**
+   * Cambia el lenguaje de la app
+   * @param val Es el lenguaje al que se va a cambiar
+   * 
+   */
+  setLang(val) {
+    this.lang = val;
+  }
+
+   /**
+   * Devuelve el lenguaje en el que esta la app
+   * @return idioma en el que esta la app
+   */
+  getLang(): string {
+    return this.lang;
   }
 
   /**

@@ -1,16 +1,23 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title color="light" text-center>Iniciar sesión</ion-title>
+      <ion-buttons slot="start">
+          <ion-menu-toggle>
+            <ion-button>
+              <ion-icon slot="icon-only" name="menu"></ion-icon>
+            </ion-button>
+          </ion-menu-toggle>
+        </ion-buttons>
+    <ion-title color="light" text-center>{{'login' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
   <ion-img src="..\..\assets\icon\Logo.png" id="icon"></ion-img>
-  <ion-label text-center color="dark">Correo</ion-label>
+  <ion-label text-center color="dark">{{'email' | translate}}</ion-label>
   <ion-input text-center type="email" name="email" [(ngModel)]="email"></ion-input>
-  <ion-label text-center color="dark">Contraseña</ion-label>
+  <ion-label text-center color="dark">{{'password' | translate}}</ion-label>
   <ion-input text-center type="password" name="password" [(ngModel)]="password"></ion-input>
-  <ion-button expand="full" color="secondary" (click)="login()">Acceder</ion-button>
-  <ion-label text-center (click)="openTemple()" >¿has olvidado tu clave?</ion-label>
-  <ion-label text-center class="marginTop10" routerLink="/sign-up">Registrate</ion-label>
+  <ion-button expand="full" color="secondary" (click)="login()">{{'login' | translate}}</ion-button>
+  <ion-label text-center (click)="openTemple()">{{'recPassword' | translate}}</ion-label>
+  <ion-label text-center class="marginTop10" routerLink="/sign-up">{{'signUp' | translate}}</ion-label>
 </ion-content>

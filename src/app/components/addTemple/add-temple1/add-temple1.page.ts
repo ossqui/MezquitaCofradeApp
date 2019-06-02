@@ -1,8 +1,12 @@
+import { ConectService } from './../../../services/conect.service';
+import { AuthService } from './../../../services/auth.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { TempleService } from "../../../services/temple.service";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-add-temple1',
@@ -25,8 +29,11 @@ export class AddTemple1Page implements OnInit {
   constructor(
     private TempleService: TempleService,
     private Router: Router,
+    private translate: TranslateService,
     private formBuilder: FormBuilder,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private AuthService: AuthService,
+    private ConectService: ConectService
   ) {
 
     this.formTemple = this.formBuilder.group({
@@ -35,6 +42,12 @@ export class AddTemple1Page implements OnInit {
       ageConstruction: ['', Validators.required],
       arquitectonicStyle: ['', Validators.required],
     });
+
+    this.translate.addLangs(environment.currentLanguages);
+    this.translate.use(this.AuthService.getLang());
+    this.ConectService.getMessage2().subscribe(() => {
+      this.translate.use(this.AuthService.getLang());
+    })
   }
 
 
@@ -97,7 +110,7 @@ export class AddTemple1Page implements OnInit {
     if (this.TempleService.part1(this.name, this.type, this.ageConstruction, this.arquitectonicStyle)) {
       this.Router.navigate(['/add-temple2'])
     } else {
-      this.presentAlert("Importante","No se puede rellenar campos unicamente con espacios","Aceptar");
+      this.presentAlert(this.translate.instant('important'),this.translate.instant('msgEmpty'),this.translate.instant('ok'));
     }
   }
 

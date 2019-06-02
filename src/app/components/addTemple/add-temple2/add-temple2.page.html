@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Añadir templo</ion-title>
+    <ion-title>{{'addTemple' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,7 +11,7 @@
   <form [formGroup]="formTemple" (ngSubmit)="savePart2()">
     <ion-card>
       <ion-card-header>
-        <ion-card-title text-center>Apertura por la mañana</ion-card-title>
+        <ion-card-title text-center>{{'om' | translate}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-datetime formControlName="hourOpeningMorning" displayFormat="HH:mm" doneText="Aceptar" text-center
@@ -21,7 +21,7 @@
     </ion-card>
     <ion-card>
       <ion-card-header>
-        <ion-card-title text-center>Cierre por la mañana</ion-card-title>
+        <ion-card-title text-center>{{'cm' | translate}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-datetime formControlName="hourClosingMorning" displayFormat="HH:mm" doneText="Aceptar" text-center
@@ -31,7 +31,7 @@
     </ion-card>
     <ion-card>
       <ion-card-header>
-        <ion-card-title text-center>Apertura por la tarde</ion-card-title>
+        <ion-card-title text-center>{{'oa' | translate}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-datetime formControlName="hourOpeningAfternoon" displayFormat="HH:mm" doneText="Aceptar" text-center
@@ -41,7 +41,7 @@
     </ion-card>
     <ion-card>
       <ion-card-header>
-        <ion-card-title text-center>Cierre por la tarde</ion-card-title>
+        <ion-card-title text-center>{{'ca' | translate}}</ion-card-title>
       </ion-card-header>
       <div>
         <ion-datetime formControlName="hourClosingAfternoon" displayFormat="HH:mm" doneText="Aceptar" text-center
@@ -51,7 +51,7 @@
     </ion-card>
     <ion-card>
       <ion-card-header no-padding>
-        <ion-card-title text-center margin-top>Descripción del templo</ion-card-title>
+        <ion-card-title text-center margin-top>{{'templeDescription' | translate}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-textarea onchange="" minlength="1" maxlength="2500" formControlName="description" type="text"
@@ -59,7 +59,7 @@
         <span>{{countDescription}}</span>
       </ion-card-content>
     </ion-card>
-    <ion-button color="dark" expand="full" type="submit" [disabled]="!formTemple.valid">Siguiente</ion-button>
-    <ion-button color="dark" expand="full" type="button" (click)="cancel()">Cancelar</ion-button>
+    <ion-button color="dark" expand="full" type="submit" [disabled]="!formTemple.valid">{{'next' | translate}}</ion-button>
+    <ion-button color="dark" expand="full" type="button" (click)="cancel()">{{'cancel' | translate}}</ion-button>
   </form>
 </ion-content>

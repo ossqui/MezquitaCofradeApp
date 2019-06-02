@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Administrar usuarios</ion-title>
+    <ion-title>{{ 'adminUsers' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,7 +11,7 @@
   <ion-list padding>
     <table>
       <tr class="bgSecondary">
-        <td>Nombre</td>
+        <td>{{ 'name' | translate }}</td>
         <td>Editor</td>
       </tr>
       <tr *ngFor="let user of userList">

@@ -1,3 +1,5 @@
+import { AuthService } from './../../../services/auth.service';
+import { ConectService } from './../../../services/conect.service';
 import { DataService } from './../../../services/data.service';
 import { Temple } from 'src/app/model/temple';
 import { Component, OnInit } from '@angular/core';
@@ -5,6 +7,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { CarvedService } from './../../../services/carved.service';
+import { TranslateService } from '@ngx-translate/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-add-carved2',
@@ -30,7 +34,10 @@ export class AddCarved2Page implements OnInit {
     private formBuilder: FormBuilder,
     private alertController: AlertController,
     private CarvedService: CarvedService,
-    private DataService: DataService
+    private DataService: DataService,
+    private translate: TranslateService,
+    private AuthService: AuthService,
+    private ConectService: ConectService
   ) {
     this.formCarved = this.formBuilder.group({
       brotherhood: ['', Validators.required],
@@ -38,6 +45,11 @@ export class AddCarved2Page implements OnInit {
       description: ['', Validators.required],
       temple: ['', Validators.required],
     });
+    this.translate.addLangs(environment.currentLanguages);
+    this.translate.use(this.AuthService.getLang());
+    this.ConectService.getMessage2().subscribe(() => {
+      this.translate.use(this.AuthService.getLang());
+    })
   }
 
   ngOnInit() {

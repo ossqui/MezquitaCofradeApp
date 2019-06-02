@@ -1,3 +1,5 @@
+import { ConectService } from './../../../services/conect.service';
+import { AuthService } from './../../../services/auth.service';
 
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -5,6 +7,8 @@ import { TempleService } from "../../../services/temple.service";
 import { isNullOrUndefined } from 'util';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-add-temple2',
@@ -26,7 +30,10 @@ export class AddTemple2Page implements OnInit {
     private TempleService: TempleService,
     private Router: Router,
     private formBuilder: FormBuilder,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private AuthService: AuthService,
+    private translate: TranslateService,
+    private ConectService: ConectService
   ) {
     this.formTemple = this.formBuilder.group({
       description: ['', Validators.required],
@@ -35,6 +42,12 @@ export class AddTemple2Page implements OnInit {
       hourOpeningAfternoon: ['', Validators.required],
       hourClosingAfternoon: ['', Validators.required],
     });
+
+    this.translate.addLangs(environment.currentLanguages);
+    this.translate.use(this.AuthService.getLang());
+    this.ConectService.getMessage2().subscribe(() => {
+      this.translate.use(this.AuthService.getLang());
+    })
   }
 
   ngOnInit() {
@@ -76,10 +89,10 @@ export class AddTemple2Page implements OnInit {
       ).then(() => {
         this.Router.navigate(['/add-temple3']);
       }).catch(() =>{
-        this.presentAlertNoAction("Error en el formulario", "Has introducido un valor no correcto", "Aceptar");
+        this.presentAlertNoAction(this.translate.instant('important'), this.translate.instant('msgEmpty'), this.translate.instant('ok'));
       });
     } else {
-      this.presentAlertNoAction("Error en el horario", "Las horas de apertura no pueden ser superiores a las de cierre", "Aceptar");
+      this.presentAlertNoAction(this.translate.instant('important'), this.translate.instant('msgHour'), this.translate.instant('ok'));
     }
 
   }

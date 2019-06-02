@@ -1,3 +1,4 @@
+import { ConectService } from './services/conect.service';
 import { UserComponent } from './components/user/user.component';
 import { Platform, ToastController, ModalController, AlertController } from '@ionic/angular';
 import { AuthService } from './services/auth.service';
@@ -9,6 +10,9 @@ import { Router } from '@angular/router';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { user } from './model/user';
+import { TranslateService } from '@ngx-translate/core';
+import { environment } from 'src/environments/environment';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +20,7 @@ import { user } from './model/user';
 })
 export class AppComponent {
 
+  checked: boolean = false;
 
 
   constructor(
@@ -27,7 +32,9 @@ export class AppComponent {
     private Router: Router,
     private toastController: ToastController,
     private ModalController: ModalController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private translate: TranslateService,
+    private ConectService: ConectService
   ) {
     this.initializeApp();
   }
@@ -35,7 +42,33 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.translate.addLangs(environment.currentLanguages);
+      this.translate.setDefaultLang(environment.defaultLanguage);
+      if (isNullOrUndefined(this.AuthService.getLang())) this.AuthService.setLang(environment.defaultLanguage);
+
+      this.translate.use(this.AuthService.getLang());
+      if (this.AuthService.getLang() == "en") {
+        this.checked = true;
+      } else {
+        this.checked = false;
+      }
     });
+
+  }
+
+  /**
+   * Cambia el leguaje de la aplicación
+   */
+  changeLang(e) {
+    if (e.detail.checked) {
+      this.AuthService.setLang("en");
+      this.translate.use("en");
+      this.ConectService.sendMessage2(true);
+    } else {
+      this.AuthService.setLang("es");
+      this.translate.use("es");
+      this.ConectService.sendMessage2(true);
+    }
   }
 
   async presentToast(msg: string) {
@@ -97,23 +130,23 @@ export class AppComponent {
 
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
-      header: 'Cerrar sesión',
-      message: '¿Estas seguro de cerrar sesión?',
+      header: this.translate.instant('logOut'),
+      message: this.translate.instant('msgCloseSession'),
       buttons: [
         {
-          text: 'Cancelar',
+          text: this.translate.instant('cancel'),
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            this.presentToast("No se cerro la sesión");
+            this.presentToast(this.translate.instant('closeSessionFalse'));
             return false;
           }
         }, {
-          text: 'Aceptar',
+          text: this.translate.instant('ok'),
           handler: () => {
             this.menu.close('custom').then(() => {
               this.AuthService.logOut();
-              this.presentToast("Se cerro la sesión");
+              this.presentToast(this.translate.instant('closeSessionTrue'));
             })
           }
         }

@@ -1,7 +1,10 @@
+import { ConectService } from './../../services/conect.service';
 import { DataService } from './../../services/data.service';
 import { AuthService } from './../../services/auth.service';
 import { user } from './../../model/user';
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-admin-users',
@@ -15,8 +18,16 @@ export class AdminUsersPage implements OnInit {
 
   constructor(
     private AuthService: AuthService,
-    private DataService: DataService
-  ) { }
+    private DataService: DataService,
+    private translate: TranslateService,
+    private ConectService: ConectService
+  ) {
+    this.translate.addLangs(environment.currentLanguages);
+    this.translate.use(this.AuthService.getLang());
+    this.ConectService.getMessage2().subscribe(() => {
+      this.translate.use(this.AuthService.getLang());
+    })
+  }
 
   ngOnInit() {
     this.AuthService.returnName().then(name => {
@@ -45,7 +56,6 @@ export class AdminUsersPage implements OnInit {
         const u: user = user;
         if (user.permisions == "2") {
           u.isChecked = true;
-          
         } else {
           u.isChecked = false;
         }

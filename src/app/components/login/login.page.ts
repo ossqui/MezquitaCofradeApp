@@ -1,9 +1,12 @@
-import { ModalController } from '@ionic/angular';
+import { ConectService } from './../../services/conect.service';
+import { TranslateService } from '@ngx-translate/core';
+import { ModalController, Platform, MenuController } from '@ionic/angular';
 import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { RecoverPasswordComponent } from '../recover-password/recover-password.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -18,8 +21,18 @@ export class LoginPage implements OnInit {
   constructor(
     private AuthService: AuthService,
     private router: Router,
-    private ModalController: ModalController
-  ) { }
+    private ModalController: ModalController,
+    private translate: TranslateService,
+    private menu: MenuController,
+    private ConectService: ConectService
+  ) {
+    this.translate.addLangs(environment.currentLanguages);
+      this.translate.use(this.AuthService.getLang());
+    this.ConectService.getMessage2().subscribe(() => {
+      this.translate.use(this.AuthService.getLang());
+    })
+
+  }
 
   ngOnInit() {
   }
@@ -30,7 +43,7 @@ export class LoginPage implements OnInit {
         this.router.navigate(['/home']);
       })
       .catch((error) => {
-        alert('Los datos de inicio de sesión son incorrectos');
+        alert(this.translate.instant('noLogin'));
       });
   }
 

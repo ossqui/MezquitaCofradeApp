@@ -1,7 +1,9 @@
 import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AlertController } from '@ionic/angular';
+import { AlertController, Platform } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-sign-up',
@@ -13,14 +15,25 @@ export class SignUpPage implements OnInit {
   public userForm: FormGroup;
 
   constructor(
+    private platform: Platform,
     private AuthService: AuthService,
     private formBuilder: FormBuilder,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private translate: TranslateService
   ) {
     this.userForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
       name: ['', Validators.required],
+    });
+
+    this.platform.ready().then(() => {
+
+      /*Gestionamos el idioma del sistema: en función del lenguaje por defecto o
+      el idioma del navegador si está disponible.
+      */
+      this.translate.addLangs(environment.currentLanguages);  //add all languages
+        this.translate.use(this.AuthService.getLang());
     });
   }
 
@@ -60,6 +73,8 @@ export class SignUpPage implements OnInit {
        this.presentAlert("Usuario no creado",msg,"Aceptar")
       })
   }
+
+  
 
   async presentAlert(messageHeader: string, message: string, textButton: string): Promise<void> {
     const alert = await this.alertController.create({

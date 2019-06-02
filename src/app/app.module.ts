@@ -20,6 +20,13 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { UserComponent } from './components/user/user.component';
 import { RecoverPasswordComponent } from './components/recover-password/recover-password.component';
 
+import { TranslateModule, TranslateLoader, TranslatePipe } from '@ngx-translate/core';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function setTranslateLoader(http: any) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [AppComponent, TempleComponent, CarvedComponent, UserComponent, RecoverPasswordComponent],
@@ -31,15 +38,23 @@ import { RecoverPasswordComponent } from './components/recover-password/recover-
     AngularFireAuthModule,
     FormsModule,
     ReactiveFormsModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    TranslateModule.forRoot(),
+    HttpClientModule, TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (setTranslateLoader),
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     StatusBar,
     Camera,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: FirestoreSettingsToken, useValue: {}}
+    { provide: FirestoreSettingsToken, useValue: {} }
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

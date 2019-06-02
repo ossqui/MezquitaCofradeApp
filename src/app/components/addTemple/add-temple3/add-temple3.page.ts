@@ -1,3 +1,5 @@
+import { ConectService } from './../../../services/conect.service';
+import { AuthService } from './../../../services/auth.service';
 import { DataService } from './../../../services/data.service';
 import { TempleService } from './../../../services/temple.service';
 import { Component, OnInit } from '@angular/core';
@@ -5,6 +7,8 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { isNullOrUndefined } from 'util';
 import { AlertController, LoadingController, ToastController, ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-add-temple3',
@@ -23,8 +27,17 @@ export class AddTemple3Page implements OnInit {
     private loadingController: LoadingController,
     private alertController: AlertController,
     private toastController: ToastController,
-    private actionSheetController: ActionSheetController
-  ) { }
+    private actionSheetController: ActionSheetController,
+    private AuthService: AuthService,
+    private translate: TranslateService,
+    private ConectService: ConectService
+  ) {
+    this.translate.addLangs(environment.currentLanguages);
+    this.translate.use(this.AuthService.getLang());
+    this.ConectService.getMessage2().subscribe(() => {
+      this.translate.use(this.AuthService.getLang());
+    })
+   }
 
   ngOnInit() {
   }
@@ -72,7 +85,7 @@ export class AddTemple3Page implements OnInit {
     if (!isNullOrUndefined(this.image)) {
       this.presentAlertConfirm();
     } else {
-      this.presentAlertSimple("Templo no añadido", "La imagen principal es obligatoria", "Aceptar");
+      this.presentAlertSimple(this.translate.instant('addTemplefalse'), this.translate.instant('imageMandatory') , this.translate.instant('ok'));
     }
   }
 
@@ -93,36 +106,36 @@ export class AddTemple3Page implements OnInit {
     const loading = await this.loadingController.create({
       spinner: "bubbles",
       duration: 5000,
-      message: 'Guardando templo...',
+      message: this.translate.instant('savingTemple'),
     });
     return await loading.present();
   }
 
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
-      header: 'Añadir templo',
-      message: '¿Estas seguro de añadir el templo?',
+      header: this.translate.instant('addTemple'),
+      message: this.translate.instant('addTempleMsg'),
       buttons: [
         {
-          text: 'Cancelar',
+          text: this.translate.instant('cancel'),
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            this.presentToast("No se añadió el templo");
+            this.presentToast(this.translate.instant('addTemplefalse'));
             return false;
           }
         }, {
-          text: 'Aceptar',
+          text: this.translate.instant('ok'),
           handler: () => {
             this.presentLoadingWithOptions();
             this.TempleService.returnTemple(this.image).then(temple => {
               this.DataService.addTemple(temple).then(() => {
                 this.loadingController.dismiss();
                 this.Router.navigate(['/home']);
-                this.presentToast("Templo añadido.")
+                this.presentToast(this.translate.instant('addTempleTrue'))
               }).catch(() => {
                 this.loadingController.dismiss();
-                this.presentToast("Templo no añadido");
+                this.presentToast(this.translate.instant('addTemplefalse'));
               });
             });
           }
@@ -145,21 +158,21 @@ export class AddTemple3Page implements OnInit {
   }
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
-      header: 'Añadir imagen',
+      header: this.translate.instant('addImage'),
       buttons: [{
-        text: 'Camara',
+        text: this.translate.instant('camera'),
         icon: 'camera',
         handler: () => {
           this.photographic();
         }
       }, {
-        text: 'Galería',
+        text: this.translate.instant('gallery'),
         icon: 'folder',
         handler: () => {
           this.gallery();
         }
       }, {
-        text: 'Cancel',
+        text: this.translate.instant('cancel'),
         icon: 'close',
         role: 'cancel',
         handler: () => {
