@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'addCarved' | translate}}</ion-title>
+    <ion-title>{{ 'addCarved' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,7 +11,7 @@
   <form [formGroup]="formCarved" (ngSubmit)="savePart2()">
     <ion-card>
       <ion-card-header no-padding>
-        <ion-card-title text-center margin-top>{{ 'brotherhoot' | translate}}</ion-card-title>
+        <ion-card-title text-center margin-top>{{ 'brotherhood' | translate }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-input minlength="1" maxlength="100" formControlName="brotherhood" type="text" (ionChange)="sizeInputs()">
@@ -21,7 +21,7 @@
     </ion-card>
     <ion-card>
       <ion-card-header no-padding>
-        <ion-card-title text-center margin-top>{{ 'dayProcession' | translate}}</ion-card-title>
+        <ion-card-title text-center margin-top>{{ 'dayProcession' | translate }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-input minlength="1" maxlength="100" formControlName="processionDay" type="text" (ionChange)="sizeInputs()">
@@ -31,10 +31,10 @@
     </ion-card>
     <ion-card>
       <ion-card-header no-padding>
-        <ion-card-title text-center margin-top>{{ 'templeLocated' | translate}}</ion-card-title>
+        <ion-card-title text-center margin-top>{{ 'templeLocated' | translate }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <ion-select interface="action-sheet" placeholder="{{ 'selectTemple' | translate}}" formControlName="temple" cancel-text="{{ 'calcel' | translate}}">
+        <ion-select interface="action-sheet" placeholder="{{ 'selectTemple' | translate }}" formControlName="temple" cancel-text="Cancelar">
           <ion-select-option *ngFor="let item of listTemples;let i = index" value="{{item.id}}">{{item.name}}
           </ion-select-option>
         </ion-select>
@@ -42,7 +42,7 @@
     </ion-card>
     <ion-card>
       <ion-card-header no-padding>
-        <ion-card-title text-center margin-top>{{ 'carvedDescription' | translate}}</ion-card-title>
+        <ion-card-title text-center margin-top>{{ 'carvedDescription' | translate }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-textarea onchange="" minlength="1" maxlength="2500" formControlName="description" type="text" (ionChange)="sizeInputs()">
@@ -51,7 +51,7 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-button color="dark" expand="full" type="submit" [disabled]="!formCarved.valid">{{'next' | translate}}</ion-button>
-    <ion-button color="dark" expand="full" type="button" (click)="cancel()">{{'cancel' | translate}}</ion-button>
+    <ion-button color="dark" expand="full" type="submit" [disabled]="!formCarved.valid">{{ 'ok' | translate }}</ion-button>
+    <ion-button color="dark" expand="full" type="button" (click)="cancel()">{{ 'cancel' | translate }}</ion-button>
   </form>
 </ion-content>
