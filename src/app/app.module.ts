@@ -24,6 +24,8 @@ import { TranslateModule, TranslateLoader, TranslatePipe } from '@ngx-translate/
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+import { GoogleMaps } from '@ionic-native/google-maps';
+
 export function setTranslateLoader(http: any) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -40,17 +42,20 @@ export function setTranslateLoader(http: any) {
     ReactiveFormsModule,
     AngularFirestoreModule,
     TranslateModule.forRoot(),
-    HttpClientModule, TranslateModule.forRoot({
+    HttpClientModule,
+    TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: (setTranslateLoader),
         deps: [HttpClient]
       }
-    })
+    }),
+    
   ],
   providers: [
     StatusBar,
     Camera,
+    GoogleMaps,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} }
