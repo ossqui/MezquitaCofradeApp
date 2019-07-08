@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-button slot="start" (click)="closeModal()">
+      <ion-icon name="arrow-round-back"></ion-icon>
+    </ion-button>
+    <ion-title>{{carved.name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <ion-button *ngIf="permisions()" color="danger" expand="full" type="button" (click)="deleteCarved(carved.id)">{{'deleteCarved' | translate}}
+  </ion-button>
+  <ion-img margin-top src="{{carved.image}}"></ion-img>
+  <ion-card-title margin-top>{{carved.name}}</ion-card-title>
+  <ion-card-subtitle text-center class="padding6px" color="black" margin-top>{{carved.brotherhood}}</ion-card-subtitle>
+  <ion-card-content text-center class="padding6px">{{carved.author}}</ion-card-content>
+  <ion-card-subtitle text-center class="padding6px" color="black">{{carved.ageOfCarved}}</ion-card-subtitle>
+  <ion-card-content text-center class="padding6px">{{carved.style}}</ion-card-content>
+  <ion-card-subtitle text-center class="padding6px" color="black">{{carved.material}}</ion-card-subtitle>
+  <ion-card-content text-center class="padding6px">{{carved.processionDay}}</ion-card-content>
+  <ion-card-content>{{carved.description}}</ion-card-content>
+  <ion-text color="secondary" text-center margin-top>
+    <h1>{{'imageGallery' | translate}}</h1>
+  </ion-text>
+  <ion-text color="secondary" text-center margin-top *ngIf="!galleryisNull()">
+    <h3>{{'msgNoImages' | translate}}</h3>
+  </ion-text>
+  <ion-slides pager="true" [options]="slideOpts" *ngIf="galleryisNull()">
+    <ion-slide *ngFor="let image of listImages">
+      <ion-img src="{{image.code}}"></ion-img>
+    </ion-slide>
+  </ion-slides>
+  <ion-button *ngIf="permisions()" color="dark" expand="full" type="button" (click)="openCapture()">{{'addImage' | translate}}
+    </ion-button>
+</ion-content>

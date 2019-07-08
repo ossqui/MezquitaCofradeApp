@@ -1,0 +1,7 @@
+{
+  "name": "MezquitaCofrade",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

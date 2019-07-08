@@ -1,0 +1,80 @@
+// http://ionicframework.com/docs/theming/
+@import '~@ionic/angular/css/core.css';
+@import '~@ionic/angular/css/normalize.css';
+@import '~@ionic/angular/css/structure.css';
+@import '~@ionic/angular/css/typography.css';
+@import '~@ionic/angular/css/display.css';
+@import '~@ionic/angular/css/padding.css';
+@import '~@ionic/angular/css/float-elements.css';
+@import '~@ionic/angular/css/text-alignment.css';
+@import '~@ionic/angular/css/text-transformation.css';
+@import '~@ionic/angular/css/flex-utils.css';
+
+.opcionesUsuario {
+    .recuUsuario{
+        font-size: 14px;
+        height: 30px;
+    }
+    .creaUsuario{
+        font-size: 14px;
+        height: 30px;
+    }
+    .cancelar{
+        font-size: 14px;
+        height: 30px;
+        color: red;
+    }
+}
+
+.bgPrimary{
+    background-color: var(--ion-color-primary);
+}
+
+.bgSecondary{
+    background-color: var(--ion-color-secondary);
+}
+.bgTertiary{
+    background-color:var(--ion-color-tertiary);
+}
+.borderLeft{
+    border-left: solid var(--ion-color-secondary) 1px;
+}
+.borderRight{
+    border-right: solid var(--ion-color-secondary) 1px;
+}
+.padding6px{
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+.fontWhite{
+    color: white;
+}
+.fontBlack{
+    color: black;
+}
+.noMarginTop{
+    margin-top: 0;
+}
+.noMarginBottom{
+    margin-bottom: 0;
+}
+.marginTop10{
+    margin-top: 10px;
+}
+#icon{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+    display: block;
+    border: none;
+}
+.borderRadious{
+    border-radius: 2px;
+}
+.lenguaje{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 100%;
+}

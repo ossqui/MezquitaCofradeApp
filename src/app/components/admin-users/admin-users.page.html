@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'adminUsers' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list padding>
+    <table>
+      <tr class="bgSecondary">
+        <td>{{ 'name' | translate }}</td>
+        <td>Editor</td>
+      </tr>
+      <tr *ngFor="let user of userList">
+        <td>{{user.name}}</td>
+        <td>
+          <ion-checkbox color="secondary" [(ngModel)]="user.isChecked" (ionBlur)="saveUserPermisions(user)">
+          </ion-checkbox>
+        </td>
+      </tr>
+    </table>
+  </ion-list>
+</ion-content>

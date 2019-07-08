@@ -1,0 +1,30 @@
+<ion-app>
+  <ion-split-pane>
+    <ion-menu side="end" menuId="custom" >
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-title>Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-content>
+          <ion-list>
+            <ion-item type="button" *ngIf="loginok()" (click)="openUserDate();">{{'myProfile' | translate}}</ion-item>
+            <ion-item type="button" (click)="goToAddTemplo()" *ngIf="permisionsEditUser()">{{'addTemple' | translate}}
+            </ion-item>
+            <ion-item type="button" *ngIf="permisionsEditUser()" (click)="goToAddCarved()">{{'addCarved' | translate}}</ion-item>
+            <ion-item type="button" *ngIf="permisionsAdminUser()" (click)="goToAdminUsers()">{{'manageUsers' | translate}}
+            </ion-item>
+          </ion-list>
+          <ion-item class="lenguaje" color="light" lines="none">
+            <ion-icon slot="start" name="flag" color="primary"></ion-icon>
+            <ion-label style="font-size:0.95rem">{{"changeLang" | translate}}</ion-label>
+            <ion-toggle slot="end" (ionChange)="changeLang($event)"></ion-toggle>
+          </ion-item>
+          <ion-button expand="full" color="secondary" checked="checked" *ngIf="loginok()" (click)="logOut()">{{"logOut" | translate}}</ion-button>
+        </ion-content>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet main></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>

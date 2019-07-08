@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'addTemple' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="formTemple" (ngSubmit)="savePart2()">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title text-center>{{'om' | translate}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-datetime formControlName="hourOpeningMorning" displayFormat="HH:mm" doneText="Aceptar" text-center
+          cancelText="Cancelar" hourValues="06, 07, 08, 09, 10, 11, 12" placeholder="00:00"
+          minuteValues="0,5,10,15,20,25,30,35,40,45,50,55"></ion-datetime>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title text-center>{{'cm' | translate}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-datetime formControlName="hourClosingMorning" displayFormat="HH:mm" doneText="Aceptar" text-center
+          cancelText="Cancelar" hourValues="06, 07, 08, 09, 10, 11, 12" placeholder="00:00"
+          minuteValues="0,5,10,15,20,25,30,35,40,45,50,55"></ion-datetime>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title text-center>{{'oa' | translate}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-datetime formControlName="hourOpeningAfternoon" displayFormat="HH:mm" doneText="Aceptar" text-center
+          cancelText="Cancelar" hourValues="13,14,15,16,17,18,19,20,21,22" placeholder="00:00"
+          minuteValues="0,5,10,15,20,25,30,35,40,45,50,55"></ion-datetime>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title text-center>{{'ca' | translate}}</ion-card-title>
+      </ion-card-header>
+      <div>
+        <ion-datetime formControlName="hourClosingAfternoon" displayFormat="HH:mm" doneText="Aceptar" text-center
+          cancelText="Cancelar" hourValues="13,14,15,16,17,18,19,20,21,22" placeholder="00:00"
+          minuteValues="0,5,10,15,20,25,30,35,40,45,50,55"></ion-datetime>
+      </div>
+    </ion-card>
+    <ion-card>
+      <ion-card-header no-padding>
+        <ion-card-title text-center margin-top>{{'templeDescription' | translate}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea onchange="" minlength="1" maxlength="2500" formControlName="description" type="text"
+          (ionChange)="sizeInputs()"></ion-textarea>
+        <span>{{countDescription}}</span>
+      </ion-card-content>
+    </ion-card>
+    <ion-button color="dark" expand="full" type="submit" [disabled]="!formTemple.valid">{{'next' | translate}}</ion-button>
+    <ion-button color="dark" expand="full" type="button" (click)="cancel()">{{'cancel' | translate}}</ion-button>
+  </form>
+</ion-content>
