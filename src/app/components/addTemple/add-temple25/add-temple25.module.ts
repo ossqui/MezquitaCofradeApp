@@ -2,18 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-
 import { IonicModule } from '@ionic/angular';
-
-import { AddTemple1Page } from './add-temple1.page';
 import { TranslateModule, TranslateLoader, TranslatePipe } from '@ngx-translate/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { AddTemple25Page } from './add-temple25.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: AddTemple1Page
+    component: AddTemple25Page
   }
 ];
 
@@ -29,8 +27,7 @@ export function setTranslateLoader(http: any) {
     ReactiveFormsModule,
     RouterModule.forChild(routes),
     TranslateModule.forRoot(),
-    HttpClientModule,
-    TranslateModule.forRoot({
+    HttpClientModule, TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: (setTranslateLoader),
@@ -38,6 +35,6 @@ export function setTranslateLoader(http: any) {
       }
     })
   ],
-  declarations: [AddTemple1Page]
+  declarations: [AddTemple25Page]
 })
-export class AddTemple1PageModule { }
+export class AddTemple25PageModule {}

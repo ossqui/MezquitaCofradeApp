@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-button slot="start" (click)="closePage()">
+      <ion-icon name="arrow-round-back"></ion-icon>
+    </ion-button>
+    <ion-title>{{temple.name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-button *ngIf="permisions()" color="danger" expand="full" type="button" (click)="deleteTemple(temple.id)">{{'deleteTemple' | translate}}
+  </ion-button>
+  <ion-img src="{{temple.image}}"></ion-img>
+  <ion-card-header>
+    <ion-card-subtitle text-center>{{temple.type}}</ion-card-subtitle>
+    <ion-card-title background="primary">{{temple.name}}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-card-subtitle class="fontBlack padding6px">{{temple.hourOpeningMorning}} a {{temple.hourClosingMorning}} -
+      {{temple.hourOpeningAfternoon}} a
+      {{temple.hourClosingAfternoon}}</ion-card-subtitle>
+    <ion-card-subtitle class="bgTertiary padding6px fontBlack noMarginTop">{{temple.ageConstruction}}
+    </ion-card-subtitle>
+    <div class="marginTop10">{{temple.description}}</div>
+  </ion-card-content>
+  <ion-text color="secondary" text-center margin-top>
+    <h1>{{'carveFromTemple' | translate}}</h1>
+    <ion-text color="secondary" text-center margin-top *ngIf="carvedsNull()">
+        <h3>{{'msgNoCarvedofTemple' | translate}}</h3>
+      </ion-text>
+  </ion-text>
+  <ion-list padding>
+    <ion-item *ngFor="let carved of carvedList" (click)="openCarved(carved)">
+      <ion-avatar slot="start">
+        <ion-img src="{{carved.image}}"></ion-img>
+      </ion-avatar>
+      <ion-label>
+        <h2> <b>{{carved.name}}</b> </h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-text color="secondary" text-center margin-top>
+    <h1>{{'imageGallery' | translate}}</h1>
+  </ion-text>
+  <ion-text color="secondary" text-center margin-top *ngIf="!galleryisNull()">
+    <h3>{{'msgNoImages' | translate}}</h3>
+  </ion-text>
+  <ion-slides pager="true" [options]="slideOpts" *ngIf="galleryisNull()">
+    <ion-slide *ngFor="let image of listImages">
+      <ion-img src="{{image.code}}"></ion-img>
+    </ion-slide>
+  </ion-slides>
+  <ion-button *ngIf="permisions()" color="dark" expand="full" type="button" (click)="openCapture()">{{'addImage' | translate}}
+  </ion-button>
+</ion-content>
