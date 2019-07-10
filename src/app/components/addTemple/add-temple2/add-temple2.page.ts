@@ -87,7 +87,7 @@ export class AddTemple2Page implements OnInit {
         this.hourOpeningAfternoon,
         this.hourClosingAfternoon
       ).then(() => {
-        this.Router.navigate(['/add-temple3']);
+        this.Router.navigate(['/add-temple25']);
       }).catch(() =>{
         this.presentAlertNoAction(this.translate.instant('important'), this.translate.instant('msgEmpty'), this.translate.instant('ok'));
       });

@@ -16,6 +16,10 @@ export class ParseLocationService {
     maxResults: 5
   };
 
+  /**
+   * Recibe coordenadas y nos duelve datos de dirección sobre el lugar de las coordendas.
+   * @param coordenadas Coordenadas del lugar del que queremos obtener los datos de dirección.
+   */
   public parseDireccion(coordenadas: LatLng): Promise<NativeGeocoderResult[]> {
     return this.nativeGeocoder.reverseGeocode(coordenadas.lat, coordenadas.lng, this.options)
       .then(result => {
@@ -23,6 +27,10 @@ export class ParseLocationService {
       });
   }
 
+  /**
+   * Recibe una dirección y nos devuelve las coordenadas de esta.
+   * @param direccion Dirección del lugar el cual queremos obtener las coordenadas.
+   */
   public parseCoordenadas(direccion: string): Promise<NativeGeocoderResult[] | string[]> {
     let coordenadas: string[];
     return this.nativeGeocoder.forwardGeocode(direccion, this.options)

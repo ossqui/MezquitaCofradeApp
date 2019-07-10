@@ -1,7 +1,7 @@
 import { Temple } from './../model/temple';
 import { Injectable } from '@angular/core';
 import { isNullOrUndefined } from 'util';
-import { promise } from 'protractor';
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,8 @@ export class TempleService {
   private hourCloseMorning: string;
   private hourOpeningAfternoon: string;
   private hourCloseAfternoon: string;
+  private latitude: string;
+  private longitude: string;
 
   constructor() { }
 
@@ -49,6 +51,15 @@ export class TempleService {
       return Promise.reject(false);
     }
   }
+  part3(latitude: string, longitude: string){
+    this.latitude = latitude;
+    this.longitude = longitude;
+    if(!isNullOrUndefined(this.latitude) && !isNullOrUndefined(longitude)){
+      return Promise.resolve(true);
+    }else{
+      return Promise.reject(false);
+    }
+  }
 
   returnTemple(image:string){
     if(!isNullOrUndefined(image)){
@@ -62,7 +73,9 @@ export class TempleService {
         hourClosingMorning: this.hourCloseMorning,
         hourOpeningAfternoon: this.hourOpeningAfternoon,
         hourClosingAfternoon: this.hourCloseAfternoon,
-        image: image
+        image: image,
+        latitude: this.latitude,
+        longitude: this.longitude
       }
 
       return Promise.resolve(this.templeGenerate);
