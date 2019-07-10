@@ -18,6 +18,8 @@ const routes: Routes = [
   { path: 'add-carved3', loadChildren: './components/addCarved/add-carved3/add-carved3.module#AddCarved3PageModule', canActivate: [AuthGuard, ContentEditorGuard] },
   { path: 'admin-users', loadChildren: './components/admin-users/admin-users.module#AdminUsersPageModule' },
   { path: 'add-temple25', loadChildren: './components/addTemple/add-temple25/add-temple25.module#AddTemple25PageModule', canActivate: [AuthGuard, ContentEditorGuard] },
+  { path: 'temple-info', loadChildren: './components/temple-info/temple-info.module#TempleInfoPageModule' },
+
 
 
 

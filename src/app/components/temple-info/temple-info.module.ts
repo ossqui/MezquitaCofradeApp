@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
+import { Camera } from '@ionic-native/camera/ngx';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AddTemple1Page } from './add-temple1.page';
+import { TempleInfoPage } from './temple-info.page';
+
 import { TranslateModule, TranslateLoader, TranslatePipe } from '@ngx-translate/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -13,7 +15,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 const routes: Routes = [
   {
     path: '',
-    component: AddTemple1Page
+    component: TempleInfoPage
   }
 ];
 
@@ -26,7 +28,6 @@ export function setTranslateLoader(http: any) {
     CommonModule,
     FormsModule,
     IonicModule,
-    ReactiveFormsModule,
     RouterModule.forChild(routes),
     TranslateModule.forRoot(),
     HttpClientModule,
@@ -38,6 +39,9 @@ export function setTranslateLoader(http: any) {
       }
     })
   ],
-  declarations: [AddTemple1Page]
+  providers: [
+    Camera
+  ],
+  declarations: [TempleInfoPage]
 })
-export class AddTemple1PageModule { }
+export class TempleInfoPageModule { }

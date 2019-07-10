@@ -1,18 +1,23 @@
+import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Temple } from '../model/temple';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConectService {
-  myobservable;
-  myobserver;
-  myobservable2;
-  myobserver2;
+  private myobservable;
+  private myobserver;
+  private myobservable2;
+  private myobserver2;
+  private temple: Temple;
 
 
 
-  constructor() {
+  constructor(
+    private Router: Router
+  ) {
     this.myobservable = new Observable((observer) => {
       this.myobserver = observer;
     });
@@ -21,6 +26,14 @@ export class ConectService {
     });
   }
 
+  setTemple(temple: Temple){
+    this.temple = temple;
+    this.Router.navigate(['/temple-info']);
+  }
+
+  getTemple(): Temple{
+    return this.temple;
+  }
 
   /**
    * Recibirá un mensaje y lo guardará en una variable

@@ -1,9 +1,9 @@
+import { Router, Route } from '@angular/router';
 import { ConectService } from './../services/conect.service';
 import { Temple } from './../model/temple';
 import { DataService } from './../services/data.service';
 import { Component, OnInit } from '@angular/core';
-import { MenuController, ModalController, LoadingController, ToastController } from '@ionic/angular';
-import { TempleComponent } from '../components/temple/temple.component';
+import { MenuController, LoadingController, ToastController } from '@ionic/angular';
 import { AuthService } from './../services/auth.service';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
@@ -19,11 +19,10 @@ export class HomePage implements OnInit {
 
   constructor(
     private DataService: DataService,
-    private ModalController: ModalController,
     private loadingController: LoadingController,
     private AuthService: AuthService,
     private translate: TranslateService,
-    private ConectService: ConectService
+    private ConectService: ConectService,
   ) {
     this.translate.addLangs(environment.currentLanguages);
     this.translate.use(this.AuthService.getLang());
@@ -43,14 +42,9 @@ export class HomePage implements OnInit {
     this.AuthService.dateUser();
   }
 
-  openTemple(temple: Temple) {
-    this.ModalController.create({
-      component: TempleComponent,
-      componentProps: {
-        temple: temple
-      }
-    }).then((modal) => modal.present())
-      .catch(() => { })
+  openTemple(temple: any) {
+    
+    this.ConectService.setTemple(temple);
   }
 
   async presentLoadingWithOptions() {
