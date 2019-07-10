@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'addTemple' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="formTemple" (ngSubmit)="savePart25()">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title text-center>Dirección</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+          <ion-select interface="action-sheet" placeholder="Selecciona el típo de vía" formControlName="via" cancel-text="Cancelar">
+              <ion-select-option value="Calle">Calle</ion-select-option>
+              <ion-select-option value="Avenida">Avenida</ion-select-option>
+              <ion-select-option value="Plaza">Plaza</ion-select-option>
+              <ion-select-option value="Paseo">Paseo</ion-select-option>
+              <ion-select-option value="Camino">Camino</ion-select-option>
+              <ion-select-option value="Parque">Parque</ion-select-option>
+            </ion-select>
+        <ion-input minlength="1" maxlength="50" formControlName="address" type="text"
+          (ionChange)="sizeInputs()"></ion-input>
+          <span>{{countAddress}}</span>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title text-center>Número</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-input minlength="1" maxlength="6" formControlName="number" type="text"
+          (ionChange)="sizeInputs()"></ion-input>
+          <span>{{countNumber}}</span>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title text-center>Localidad</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-input minlength="1" maxlength="50" formControlName="locality" type="text"
+          (ionChange)="sizeInputs()"></ion-input>
+          <span>{{countLocality}}</span>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title text-center>Provincia</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-input minlength="1" maxlength="50" formControlName="province" type="text"
+          (ionChange)="sizeInputs()"></ion-input>
+          <span>{{countProvince}}</span>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title text-center>Código postal</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-input minlength="1" maxlength="10" formControlName="postalCode" type="text"
+          (ionChange)="sizeInputs()"></ion-input>
+          <span>{{countPostalCode}}</span>
+      </ion-card-content>
+    </ion-card>
+    <ion-button color="dark" expand="full" type="submit" [disabled]="!formTemple.valid">{{'next' | translate}}</ion-button>
+    <ion-button color="dark" expand="full" type="button" (click)="cancel()">{{'cancel' | translate}}</ion-button>
+  </form>
+</ion-content>
