@@ -7,7 +7,8 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-button *ngIf="permisions()" color="danger" expand="full" type="button" (click)="deleteTemple(temple.id)">{{'deleteTemple' | translate}}
+  <ion-button *ngIf="permisions()" color="danger" expand="full" type="button" (click)="deleteTemple(temple.id)">
+    {{'deleteTemple' | translate}}
   </ion-button>
   <ion-img src="{{temple.image}}"></ion-img>
   <ion-card-header>
@@ -25,8 +26,8 @@
   <ion-text color="secondary" text-center margin-top>
     <h1>{{'carveFromTemple' | translate}}</h1>
     <ion-text color="secondary" text-center margin-top *ngIf="carvedsNull()">
-        <h3>{{'msgNoCarvedofTemple' | translate}}</h3>
-      </ion-text>
+      <h3>{{'msgNoCarvedofTemple' | translate}}</h3>
+    </ion-text>
   </ion-text>
   <ion-list padding>
     <ion-item *ngFor="let carved of carvedList" (click)="openCarved(carved)">
@@ -49,6 +50,10 @@
       <ion-img src="{{image.code}}"></ion-img>
     </ion-slide>
   </ion-slides>
-  <ion-button *ngIf="permisions()" color="dark" expand="full" type="button" (click)="openCapture()">{{'addImage' | translate}}
+  <ion-button *ngIf="permisions()" color="dark" expand="full" type="button" (click)="openCapture()">
+    {{'addImage' | translate}}
   </ion-button>
+    <ion-card-title background="primary">Ubicación</ion-card-title>
+    <div id="map_canvas"></div>
+
 </ion-content>

@@ -12,6 +12,21 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+//Mapas
+import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
+import {
+  GoogleMaps,
+  GoogleMap,
+  GoogleMapsEvent,
+  GoogleMapOptions,
+  CameraPosition,
+  MarkerOptions,
+  Marker,
+  GoogleMapsMapTypeId,
+  MyLocation,
+  LatLng,
+  GoogleMapsAnimation,
+} from '@ionic-native/google-maps';
 
 @Component({
   selector: 'app-temple-info',
@@ -22,6 +37,7 @@ export class TempleInfoPage implements OnInit {
   private temple: Temple;
   carvedList: Carved[] = [];
   listImages: imageGallery[] = [];
+  map: GoogleMap;
 
   constructor(
     private camera: Camera,
@@ -33,7 +49,9 @@ export class TempleInfoPage implements OnInit {
     private DataService: DataService,
     private alertController: AlertController,
     private toastController: ToastController,
-    private actionSheetController: ActionSheetController
+    private actionSheetController: ActionSheetController,
+    private GoogleMaps: GoogleMaps,
+    private nativeGeocoder: NativeGeocoder
   ) {
     this.temple = this.ConectService.getTemple();
 
@@ -58,10 +76,11 @@ export class TempleInfoPage implements OnInit {
     });
     this.DataService.getCarvedTemple(this.temple.id).subscribe(carvedCollection => {
       this.carvedList = carvedCollection;
-    })
+    });
+    this.cargarMapa();
   }
 
-  closePage(){
+  closePage() {
     this.Router.navigate(['/home']);
   }
 
@@ -140,10 +159,10 @@ export class TempleInfoPage implements OnInit {
     }
   }
 
-  carvedsNull(){
-    if(this.carvedList.length == 0){
+  carvedsNull() {
+    if (this.carvedList.length == 0) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
@@ -230,4 +249,42 @@ export class TempleInfoPage implements OnInit {
     await actionSheet.present();
   }
 
+  cargarMapa() {
+    let opcionesMapa: GoogleMapOptions = {
+      mapType: GoogleMapsMapTypeId.HYBRID,
+      controls: {
+        // 'compass': true,
+        // 'myLocationButton': true,
+        // 'myLocation': true,
+        'zoom': true,
+      },
+      camera: {
+        target: {
+          lat: this.temple.latitude,
+          lng: this.temple.longitude
+        },
+        zoom: 18
+      }
+    };
+
+    this.map = GoogleMaps.create('map_canvas', opcionesMapa);
+    this.map.one(GoogleMapsEvent.MAP_READY).then(
+      resultado => {
+        this.map.addMarker({
+          title: this.temple.name,
+          icon: 'blue',
+          animation: GoogleMapsAnimation.BOUNCE,
+          position: {
+            lat: parseFloat(this.temple.latitude),
+            lng: parseFloat(this.temple.longitude),
+          }
+        });
+
+      }
+    ).catch(
+      error => {
+        console.log(error);
+      }
+    );
+  }
 }
